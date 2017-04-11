@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.cnblogs.com/sdjl/articles/1274312.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/encoder.js.下载"></script><script src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/saved_resource" defer=""></script>                        
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>通过金矿模型介绍动态规划 - 刘永辉 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/bundle-clover.css">
+<link type="text/css" rel="stylesheet" href="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/39275.css">
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/bundle-clover-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/SDJL/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/SDJL/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/SDJL/wlwmanifest.xml">
+<script src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/jquery.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'SDJL', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" src="https://j-cdn.sho9wbox.com/j/?jlib=master&amp;v=2&amp;t=vc&amp;d=PC&amp;_=8"></script></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+<tbody><tr>
+	<td width="299" background="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/banner1.jpg"></td>
+	<td background="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/banner.jpg">
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/SDJL/">SDJL的足迹</a><br>
+		
+	</div>
+</div>
+</td>
+	<td width="296" background="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/banner2.jpg"></td>
+</tr>
+</tbody></table>
+<div id="mylinks">&nbsp; &nbsp;
+<a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/SDJL/">首页</a>&nbsp; &nbsp;
+<a href="http://q.cnblogs.com/" class="menu" target="_blank">博问</a>&nbsp; &nbsp;
+<a href="http://home.cnblogs.com/ing/" class="menu" target="_blank">闪存</a>&nbsp; &nbsp;
+&nbsp; &nbsp;
+
+&nbsp; &nbsp;
+<a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a>
+<!-- &nbsp;&nbsp;&nbsp; -->
+</div>
+<div id="mytopmenu">
+	
+		<div id="mystats">
+			<div id="blog_stats">
+<!--done-->
+<div class="blogStats">
+posts - 67,&nbsp;
+comments - 131,&nbsp;
+trackbacks - 8
+
+</div></div></div>
+	
+</div>
+<div id="centercontent">
+	
+<div id="post_detail">
+<!--done-->
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html">通过金矿模型介绍动态规划</a>
+	</div>
+	<div id="cnblogs_post_body"><p><font face="Verdana"><a title="点击下载01背包测试数据.rar" href="http://files.cnblogs.com/sdjl/01%E8%83%8C%E5%8C%85%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.rar" target="_blank">点击下载01背包测试数据.rar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;<span lang="EN-US"><span><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">对于动态规划，每个刚接触的人都需要一段时间来理解，特别是第一次接触的时候总是想不通为什么这种方法可行，这篇文章就是为了帮助大家理解动态规划，并通过讲解基本的</span><span lang="EN-US">01</span><span style="font-family: 宋体;">背包问题来引导读者如何去思考动态规划。本文力求通俗易懂，无异性，不让读者感到迷惑，引导读者去思考，所以如果你在阅读中发现有不通顺的地方，让你产生错误理解的地方，让你难得读懂的地方，请跟贴指出，谢谢！</span></span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第一节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">初识动态规划</span><span lang="EN-US">--------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">经典的</span><span lang="EN-US">01</span><span style="font-family: 宋体;">背包问题是这样的：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">有一个包和</span><span lang="EN-US">n</span><span style="font-family: 宋体;">个物品，包的容量为</span><span lang="EN-US">m</span><span style="font-family: 宋体;">，每个物品都有各自的体积和价值，问当从这</span><span lang="EN-US">n</span><span style="font-family: 宋体;">个物品中选择多个物品放在包里而物品体积总数不超过包的容量</span><span lang="EN-US">m</span><span style="font-family: 宋体;">时，能够得到的最大价值是多少？</span><span lang="EN-US">[</span><span style="font-family: 宋体;">对于每个物品不可以取多次，最多只能取一次，之所以叫做</span><span lang="EN-US">01</span><span style="font-family: 宋体;">背包，</span><span lang="EN-US">0</span><span style="font-family: 宋体;">表示不取，</span><span lang="EN-US">1</span><span style="font-family: 宋体;">表示取</span><span lang="EN-US">]</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">为了用一种生动又更形象的方式来讲解此题，我把此题用另一种方式来描述，如下：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">有一个国家，所有的国民都非常老实憨厚，某天他们在自己的国家发现了十座金矿，并且这十座金矿在地图上排成一条直线，国王知道这个消息后非常高兴，他希望能够把这些金子都挖出来造福国民，首先他把这些金矿按照在地图上的位置从西至东进行编号，依次为</span><span lang="EN-US">0</span><span style="font-family: 宋体;">、</span><span lang="EN-US">1</span><span style="font-family: 宋体;">、</span><span lang="EN-US">2</span><span style="font-family: 宋体;">、</span><span lang="EN-US">3</span><span style="font-family: 宋体;">、</span><span lang="EN-US">4</span><span style="font-family: 宋体;">、</span><span lang="EN-US">5</span><span style="font-family: 宋体;">、</span><span lang="EN-US">6</span><span style="font-family: 宋体;">、</span><span lang="EN-US">7</span><span style="font-family: 宋体;">、</span><span lang="EN-US">8</span><span style="font-family: 宋体;">、</span><span lang="EN-US">9</span><span style="font-family: 宋体;">，然后他命令他的手下去对每一座金矿进行勘测，以便知道挖取每一座金矿需要多少人力以及每座金矿能够挖出多少金子，然后动员国民都来挖金子。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">1</span><span style="font-family: 宋体;">：挖每一座金矿需要的人数是固定的，多一个人少一个人都不行。国王知道每个金矿各需要多少人手，金矿</span><span lang="EN-US">i</span><span style="font-family: 宋体;">需要的人数为</span><span lang="EN-US">peopleNeeded[i]</span><span style="font-family: 宋体;">。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">2</span><span style="font-family: 宋体;">：每一座金矿所挖出来的金子数是固定的，当第</span><span lang="EN-US">i</span><span style="font-family: 宋体;">座金矿有</span><span lang="EN-US">peopleNeeded[i]</span><span style="font-family: 宋体;">人去挖的话，就一定能恰好挖出</span><span lang="EN-US">gold[i]</span><span style="font-family: 宋体;">个金子。否则一个金子都挖不出来。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">3</span><span style="font-family: 宋体;">：开采一座金矿的人完成开采工作后，他们不会再次去开采其它金矿，因此一个人最多只能使用一次。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">4</span><span style="font-family: 宋体;">：国王在全国范围内仅招募到了</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">名愿意为了国家去挖金子的人，因此这些人可能不够把所有的金子都挖出来，但是国王希望挖到的金子越多越好。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">5</span><span style="font-family: 宋体;">：这个国家的每一个人都很老实（包括国王），不会私吞任何金子，也不会弄虚作假，不会说谎话。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">6</span><span style="font-family: 宋体;">：有很多人拿到这个题后的第一反应就是对每一个金矿求出平均每个人能挖出多少金子，然后从高到低进行选择，这里要强调这种方法是错的，如果你也是这样想的，请考虑背包模型，当有一个背包的容量为</span><span lang="EN-US">10</span><span style="font-family: 宋体;">，共有</span><span lang="EN-US">3</span><span style="font-family: 宋体;">个物品，体积分别是</span><span lang="EN-US">3</span><span style="font-family: 宋体;">、</span><span lang="EN-US">3</span><span style="font-family: 宋体;">、</span><span lang="EN-US">5</span><span style="font-family: 宋体;">，价值分别是</span><span lang="EN-US">6</span><span style="font-family: 宋体;">、</span><span lang="EN-US">6</span><span style="font-family: 宋体;">、</span><span lang="EN-US">9</span><span style="font-family: 宋体;">，那么你的方法取到的是前两个物品，总价值是</span><span lang="EN-US">12</span><span style="font-family: 宋体;">，但明显最大值是后两个物品组成的</span><span lang="EN-US">15</span><span style="font-family: 宋体;">。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目补充</span><span lang="EN-US">7</span><span style="font-family: 宋体;">：我们只需要知道最多可以挖出多少金子即可，而不用关心哪些金矿挖哪些金矿不挖。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">那么，国王究竟如何知道在只有</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人的情况下最多能挖出多少金子呢？国王是如何思考这个问题的呢？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王首先来到了第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">个金矿的所在地（注意，第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">个就是最后一个，因为是从</span><span lang="EN-US">0</span><span style="font-family: 宋体;">开始编号的，最西边的那个金矿是第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">个），他的臣子告诉他，如果要挖取第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">个金矿的话就需要</span><span lang="EN-US">1500</span><span style="font-family: 宋体;">个人，并且第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">个金矿可以挖出</span><span lang="EN-US">8888</span><span style="font-family: 宋体;">个金子。听到这里国王哈哈大笑起来，因为原先他以为要知道十个金矿在仅有</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人的情况下最多能挖出多少金子是一件很难思考的问题，但是，就在刚才听完他的臣子所说的那句话时，国王已经知道总共最多能挖出多少金子了，国王是如何在不了解其它金矿的情况下知道最多能挖出多少金子的呢？他的臣子们也不知道这个谜，因此他的臣子们就问他了：“最聪明的国王陛下，我们都没有告诉您其它金矿的情况，您是如何知道最终答案的呢？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">得意的国王笑了笑，然后把他最得意的“左、右手”叫到跟前，说到：“我并不需要考虑最终要挖哪些金矿才能得到最多的金子，我只需要考虑我面前的这座金矿就可以了，对于我面前的这座金矿不外乎仅有两种选择，要么挖，要么不挖，对吧？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“当然，当然”大臣们回答倒。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王继续说道：“如果我挖取第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">座金矿的话那么我现在就能获得</span><span lang="EN-US">8888</span><span style="font-family: 宋体;">个金子，而我将用去</span><span lang="EN-US">1500</span><span style="font-family: 宋体;">个人，那么我还剩下</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人。我亲爱的左部下，如果你告诉我当我把所有剩下的</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人和所有剩下的其它金矿都交给你去开采你最多能给我挖出多少金子的话，那么我不就知道了在第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">个金矿一定开采的情况下所能得到的最大金币数吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王的左部下听后回答道：“国王陛下，您的意思是如果我能用</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人在其它金矿最多开采出</span><span lang="EN-US">x</span><span style="font-family: 宋体;">个金币的话，那您一共就能够获得</span><span lang="EN-US"> x + 8888</span><span style="font-family: 宋体;">个金子，对吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“是啊，是啊……如果第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">座金矿一定开采的话……”大臣们点头说到。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王笑着继续对着他的右部下说到：“亲爱的右部下，也许我并不打算开采这第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">座金矿，那么我依然拥有</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人，如果我把这</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人和剩下的金矿都给你的话，你最多能给我挖出多少个金子呢？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王的右部下聪明地说道：“尊敬的国王陛下，我明白您的意思了，如果我回答最多能购开采出</span><span lang="EN-US">y</span><span style="font-family: 宋体;">个金币的话，那您就可以在</span><span lang="EN-US">y</span><span style="font-family: 宋体;">和</span><span lang="EN-US">x+8888</span><span style="font-family: 宋体;">之间选择一个较大者，而这个较大者就是最终我们能获得的最大金币数，您看我这样理解对吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王笑得更灿烂了，问他的左部下：“那么亲爱的左部下，我给你</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人和其余金矿的话你能告诉我最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“请您放心，这个问题难不倒我”。左部下向国王打包票说到。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王高兴地继续问他的右部下：“那右部下你呢，如果我给你</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人和其余金矿的话你能告诉我最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“当然能了！交给我吧！”右部下同左部下一样自信地回答道。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“那就拜托给你们两位了，现在我要回到我那舒适的王宫里去享受了，我期待着你们的答复。”国王说完就开始动身回去等消息了，他是多么地相信他的两个大臣能够给他一个准确的答复，因为国王其实知道他的两位大臣要比他聪明得多。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">故事发展到这里，你是否在想国王的这两个大臣又是如何找到让国王满意的答案的呢？他们为什么能够如此自信呢？事实上他们的确比国王要聪明一些，因为他们从国王的身上学到了一点，就是这一点让他们充满了自信。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王走后，国王的左、右部下来到了第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">座金矿，早已在那里等待他们的金矿勘测兵向两位大臣报道：“聪明的两位大臣，您们好，第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">座金矿需要</span><span lang="EN-US">1000</span><span style="font-family: 宋体;">个人才能开采，可以获得</span><span lang="EN-US">7000</span><span style="font-family: 宋体;">个金子”。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">因为国王仅给他的左部下</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人，所以国王的左部下叫来了两个人，对着其中一个人问到：“如果我给你</span><span lang="EN-US">7500</span><span style="font-family: 宋体;">个人和除了第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">、第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">的其它所有金矿的话，你能告诉我你最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">然后国王的左部下继续问另一个人：“如果我给你</span><span lang="EN-US">8500</span><span style="font-family: 宋体;">个人和除了第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">、第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">的其它所有金矿的话，你能告诉我你最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王的左部下在心里想着：“如果他们俩都能回答我的问题的话，那国王交给我的问题不就解决了吗？哈哈哈！”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">因为国王给了他的右部下</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人，所以国王的右部下同样也叫来了两个人，对着其中一个人问：“如果我给你</span><span lang="EN-US">9000</span><span style="font-family: 宋体;">个人和除了第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">、第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">的其它所有金矿的话，你能告诉我你最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">然后国王的右部下继续问他叫来的另一个人：“如果我给你</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">个人和除了第</span><span lang="EN-US">8</span><span style="font-family: 宋体;">、第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">的其它所有金矿的话，你能告诉我你最多能挖出多少金子吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">此时，国王的右部下同左部下一样，他们都在为自己如此聪明而感到满足。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">当然，这四个被叫来的人同样自信地回答没有问题，因为他们同样地从这两个大臣身上学到了相同的一点，而两位自认为自己一样很聪明的大臣得意地笑着回到了他们的府邸，等着别人回答他们提出来的问题，现在你知道了这两个大臣是如何解决国王交待给他们的问题了吗？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">那么你认为被大臣叫去的那四个人又是怎么完成大臣交给他们的问题的呢？答案当然是他们找到了另外八个人！</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">没用多少功夫，这个问题已经在全国传开了，更多人的人找到了更更多的人来解决这个问题，而有些人却不需要去另外找两个人帮他，哪些人不需要别人的帮助就可以回答他们的问题呢？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">很明显，当被问到给你</span><span lang="EN-US">z</span><span style="font-family: 宋体;">个人和仅有第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座金矿时最多能挖出多少金子时，就不需要别人的帮助，因为你知道，如果</span><span lang="EN-US">z</span><span style="font-family: 宋体;">大于等于挖取第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座金矿所需要的人数的话，那么挖出来的最多金子数就是第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座金矿能够挖出来的金子数，如果这</span><span lang="EN-US">z</span><span style="font-family: 宋体;">个人不够开采第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座金矿，那么能挖出来的最多金子数就是</span><span lang="EN-US">0</span><span style="font-family: 宋体;">，因为这唯一的金矿不够人力去开采。让我们为这些不需要别人的帮助就可以准确地得出答案的人们鼓掌吧，这就是传说中的底层劳动人民！</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">故事讲到这里先暂停一下，我们现在重新来分析一下这个故事，让我们对动态规划有个理性认识。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">子问题：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王需要根据两个大臣的答案以及第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">座金矿的信息才能判断出最多能够开采出多少金子。为了解决自己面临的问题，他需要给别人制造另外两个问题，这两个问题就是子问题。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第一点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">最优子结构：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王相信，只要他的两个大臣能够回答出正确的答案（对于考虑能够开采出的金子数，最多的也就是最优的同时也就是正确的），再加上他的聪明的判断就一定能得到最终的正确答案。我们把这种子问题最优时母问题通过优化选择后一定最优的情况叫做“最优子结构”。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第二点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">子问题重叠：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">实际上国王也好，大臣也好，所有人面对的都是同样的问题，即给你一定数量的人，给你一定数量的金矿，让你求出能够开采出来的最多金子数。我们把这种母问题与子问题本质上是同一个问题的情况称为“子问题重叠”。然而问题中出现的不同点往往就是被子问题之间传递的参数，比如这里的人数和金矿数。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第三点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">边界：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">想想如果不存在前面我们提到的那些底层劳动者的话这个问题能解决吗？永远都不可能！我们把这种子问题在一定时候就不再需要提出子子问题的情况叫做边界，没有边界就会出现死循环。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第四点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">子问题独立：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">要知道，当国王的两个大臣在思考他们自己的问题时他们是不会关心对方是如何计算怎样开采金矿的，因为他们知道，国王只会选择两个人中的一个作为最后方案，另一个人的方案并不会得到实施，因此一个人的决定对另一个人的决定是没有影响的。我们把这种一个母问题在对子问题选择时，当前被选择的子问题两两互不影响的情况叫做“子问题独立”。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">这就是动态规划，具有“最优子结构”、“子问题重叠”、“边界”和“子问题独立”，当你发现你正在思考的问题具备这四个性质的话，那么恭喜你，你基本上已经找到了动态规划的方法。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">有了上面的这几点，我们就可以写出动态规划的转移方程式，现在我们来写出对应这个问题的方程式，如果用</span><span lang="EN-US">gold[mineNum]</span><span style="font-family: 宋体;">表示第</span><span lang="EN-US">mineNum</span><span style="font-family: 宋体;">个金矿能够挖出的金子数，用</span><span lang="EN-US">peopleNeeded[mineNum]</span><span style="font-family: 宋体;">表示挖第</span><span lang="EN-US">mineNum</span><span style="font-family: 宋体;">个金矿需要的人数，用函数</span><span lang="EN-US">f(people,mineNum)</span><span style="font-family: 宋体;">表示当有</span><span lang="EN-US">people</span><span style="font-family: 宋体;">个人和编号为</span><span lang="EN-US">0</span><span style="font-family: 宋体;">、</span><span lang="EN-US">1</span><span style="font-family: 宋体;">、</span><span lang="EN-US">2</span><span style="font-family: 宋体;">、</span><span lang="EN-US">3</span><span style="font-family: 宋体;">、……、</span><span lang="EN-US">mineNum</span><span style="font-family: 宋体;">的金矿时能够得到的最大金子数的话，</span><span lang="EN-US">f(people,mineNum)</span><span style="font-family: 宋体;">等于什么呢？或者说</span><span lang="EN-US">f(people,mineNum)</span><span style="font-family: 宋体;">的转移方程是怎样的呢？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">答案是：</span></p>
+<p class="MsoNormal" style="text-indent: 21pt;"><span style="font-family: 宋体;">&nbsp;当</span><span lang="EN-US">mineNum = 0</span><span style="font-family: 宋体;">且</span><span lang="EN-US">people &gt;= peopleNeeded[mineNum]</span><span style="font-family: 宋体;">时</span><span lang="EN-US"> f(people,mineNum) = gold[mineNum]</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">当</span><span lang="EN-US">mineNum = 0</span><span style="font-family: 宋体;">且</span><span lang="EN-US">people &lt; peopleNeeded[mineNum]</span><span style="font-family: 宋体;">时</span><span lang="EN-US"> f(people,mineNum) = 0</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">当</span><span lang="EN-US">mineNum != 0</span><span style="font-family: 宋体;">时</span><span lang="EN-US"> f(people,mineNum) = f(people-peopleNeeded[mineNum], mineNum-1) + gold[mineNum]</span><span style="font-family: 宋体;">与</span><span lang="EN-US">f(people, mineNum-1)</span><span style="font-family: 宋体;">中的较大者，前两个式子对应动态规划的“边界”，后一个式子对应动态规划的“最优子结构”请读者弄明白后再继续往下看。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第二节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">动态规划的优点</span><span lang="EN-US">--------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">现在我假设读者你已经搞清楚了为什么动态规划是正确的方法，但是我们为什么需要使用动态规划呢？请先继续欣赏这个故事：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王得知他的两个手下使用了和他相同的方法去解决交代给他们的问题后，不但没有认为他的两个大臣在偷懒，反而很高兴，因为他知道，他的大臣必然会找更多的人一起解决这个问题，而更多的人会找更更多的人，这样他这个聪明的方法就会在不经意间流传开来，而全国人民都会知道这个聪明的方法是他们伟大的国王想出来的，你说国王能不高兴吗？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">但是国王也有一些担忧，因为他实在不知道这个“工程”要动用到多少人来完成，如果帮助他解决这个问题的人太多的话那么就太劳民伤财了。“会不会影响到今年的收成呢？”国王在心里想着这个问题，于是他请来了整个国家里唯一的两个数学天才，一个叫做小天，另一个叫做小才。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王问小天：“小天啊，我发觉这个问题有点严重，我知道其实这可以简单的看成一个组合问题，也就是从十个金矿中选取若干个金矿进行开采，看看哪种组合得到的金子最多，也许用组合方法会更好一些。你能告诉我一共有多少种组合情况吗？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“国王陛下，如果用组合方法的话一共要考虑</span><span lang="EN-US">2</span><span style="font-family: 宋体;">的</span><span lang="EN-US">10</span><span style="font-family: 宋体;">次方种情况，也就是</span><span lang="EN-US">1024</span><span style="font-family: 宋体;">种情况。”小天思考了一会回答到。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“嗯……，如果每一种情况我交给一个人去计算能得到的金子数的话，那我也要</span><span lang="EN-US">1024</span><span style="font-family: 宋体;">个人，其实还是挺多的。”国王好像再次感觉到了自己的方法是正确的。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王心理期待着小才能够给它一个更好的答案，问到：“小才啊，那么你能告诉我用我的那个方法总共需要多少人吗？其实，我也计算过，好像需要的人数是</span><span lang="EN-US">1+2+4+8+16+32+64+</span><span style="font-family: 宋体;">……，毕竟每一个人的确都需要找另外两个人来帮助他们……”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">不辜负国王的期待，小才微笑着说到：“亲爱的国王陛下，其实我们并不需要那么多人，因为有很多问题其实是相同的，而我们只需要为每一个不同的问题使用一个人力便可。”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王高兴的问到：“此话如何讲？”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“打个比方，如果有一个人需要知道</span><span lang="EN-US">1000</span><span style="font-family: 宋体;">个人和</span><span lang="EN-US">3</span><span style="font-family: 宋体;">个金矿可以开采出多少金子，同时另一个人也需要知道</span><span lang="EN-US">1000</span><span style="font-family: 宋体;">个人和</span><span lang="EN-US">3</span><span style="font-family: 宋体;">个金矿可以开采出多少金子的话，那么他们可以去询问相同的一个人，而不用各自找不同的人浪费人力了。”</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">国王思考着说到：“嗯，很有道理，如果问题是一样的话那么就不需要去询问两个不同的人了，也就是说一个不同的问题仅需要一个人力，那么一共有多少个不同的问题呢？”</span><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“因为每个问题的人数可以从</span><span lang="EN-US">0</span><span style="font-family: 宋体;">取到</span><span lang="EN-US">10000</span><span style="font-family: 宋体;">，而金矿数可以从</span><span lang="EN-US">0</span><span style="font-family: 宋体;">取到</span><span lang="EN-US">10</span><span style="font-family: 宋体;">，所以最多大约有</span><span lang="EN-US">10000 * 10 </span><span style="font-family: 宋体;">等于</span><span lang="EN-US">100000</span><span style="font-family: 宋体;">个不同的问题。”</span> <span style="font-family: 宋体;">小才一边算着一边回答。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“什么？十万个问题？十万个人力？”国王有点失望。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">“请国王放心，事实上我们需要的人力远远小于这个数的，因为不是每一个问题都会遇到，也许我们仅需要一、两百个人力就可以解决这个问题了，这主要和各个金矿所需要的人数有关。”</span> <span style="font-family: 宋体;">小才立刻回答到。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">故事的最后，自然是国王再一次向他的臣民们证明了他是这个国家里最聪明的人，现在我们通过故事的第二部分来考虑动态规划的另外两个思考点。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第五点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">做备忘录：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">正如上面所说的一样，当我们遇到相同的问题时，我们可以问同一个人。讲的通俗一点就是，我们可以把问题的解放在一个变量中，如果再次遇到这个问题就直接从变量中获得答案，因此每一个问题仅会计算一遍，如果不做备忘的话，动态规划就没有任何优势可言了。</span><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">思考动态规划的第六点</span><span lang="EN-US">----</span><span style="font-family: 宋体;">时间分析：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">正如上面所说，如果我们用穷举的方法，至少需要</span><span lang="EN-US">2^n</span><span style="font-family: 宋体;">个常数时间，因为总共有</span><span lang="EN-US">2^n</span><span style="font-family: 宋体;">种情况需要考虑，如果在背包问题中，包的容量为</span><span lang="EN-US">1000</span><span style="font-family: 宋体;">，物品数为</span><span lang="EN-US">100</span><span style="font-family: 宋体;">，那么需要考虑</span><span lang="EN-US">2^100</span><span style="font-family: 宋体;">种情况</span><span lang="EN-US">,</span><span style="font-family: 宋体;">这个数大约为</span><span lang="EN-US">10</span><span style="font-family: 宋体;">的</span><span lang="EN-US">30</span><span style="font-family: 宋体;">次方。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">而如果用动态规划，最多大概只有</span><span lang="EN-US">1000*100 = 100000</span><span style="font-family: 宋体;">个不同的问题，这和</span><span lang="EN-US">10</span><span style="font-family: 宋体;">的</span><span lang="EN-US">30</span><span style="font-family: 宋体;">次方比起来优势是很明显的。而实际情况并不会出现那么多不同的问题，比如在金矿模型中，如果所有的金矿所需人口都是</span><span lang="EN-US">1000</span><span style="font-family: 宋体;">个人，那么问题总数大约只有</span><span lang="EN-US">100</span><span style="font-family: 宋体;">个。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">非正式地，我们可以很容易得到动态规划所需时间，如果共有</span><span lang="EN-US">questionCount</span><span style="font-family: 宋体;">个相同的子问题，而每一个问题需要面对</span><span lang="EN-US">chooseCount</span><span style="font-family: 宋体;">种选择时，我们所需时间就为</span><span lang="EN-US">questionCount * chooseCount</span><span style="font-family: 宋体;">个常数。在金矿模型中，子问题最多有大概</span><span lang="EN-US">people * n </span><span style="font-family: 宋体;">个</span><span lang="EN-US">(</span><span style="font-family: 宋体;">其中</span><span lang="EN-US">people</span><span style="font-family: 宋体;">是用于开采金矿的总人数，</span><span lang="EN-US">n</span><span style="font-family: 宋体;">是金矿的总数</span><span lang="EN-US">)</span><span style="font-family: 宋体;">，因此</span><span lang="EN-US">questionCount = people * n</span><span style="font-family: 宋体;">，而就像国王需要考虑是采用左部下的结果还是采用右部下的结果一样，每个问题面对两个选择，因此</span><span lang="EN-US">chooseCount = 2,</span><span style="font-family: 宋体;">所以程序运行时间为</span><span lang="EN-US"> T = O(questionCount * chooseCount) =O(people * n)</span><span style="font-family: 宋体;">，别忘了实际上需要的时间小于这个值，根据所遇到的具体情况有所不同。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">这就是动态规划的魔力，它减少了大量的计算，因此我们需要动态规划！</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第三节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">动态规划的思考角度</span><span lang="EN-US">----------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">那么什么是动态规划呢？我个人觉得，如果一个解决问题的方法满足上面六个思考点中的前四个，那么这个方法就属于动态规划。而在思考动态规划方法时，后两点同样也是需要考虑的。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">面对问题要寻找动态规划的方法，首先要清楚一点，动态规划不是算法，它是一种方法，它是在一件事情发生的过程中寻找最优值的方法，因此，我们需要对这件事情所发生的过程进行考虑。而通常我们从过程的最后一步开始考虑，而不是先考虑过程的开始。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">打个比方，上面的挖金矿问题，我们可以认为整个开采过程是从西至东进行开采的（也就是从第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座开始），那么总有面对最后一座金矿的时候（第</span><span lang="EN-US">9</span><span style="font-family: 宋体;">座），对这座金矿不外乎两个选择，开采与不开采，在最后一步确定时再去确定倒数第二步，直到考虑第</span><span lang="EN-US">0</span><span style="font-family: 宋体;">座金矿（过程的开始）。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">而过程的开始，也就是考虑的最后一步，就是边界。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">因此在遇到一个问题想用动态规划的方法去解决时，不妨先思考一下这个过程是怎样的，然后考虑过程的最后一步是如何选择的，通常我们需要自己去构造一个过程，比如后面的练习。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第四节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">总结</span><span lang="EN-US">-------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">那么遇到问题如何用动态规划去解决呢？根据上面的分析我们可以按照下面的步骤去考虑：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>1</span><span style="font-family: 宋体;">、构造问题所对应的过程。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>2</span><span style="font-family: 宋体;">、思考过程的最后一个步骤，看看有哪些选择情况。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>3</span><span style="font-family: 宋体;">、找到最后一步的子问题，确保符合“子问题重叠”，把子问题中不相同的地方设置为参数。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>4</span><span style="font-family: 宋体;">、使得子问题符合“最优子结构”。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>5</span><span style="font-family: 宋体;">、找到边界，考虑边界的各种处理方式。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>6</span><span style="font-family: 宋体;">、确保满足“子问题独立”，一般而言，如果我们是在多个子问题中选择一个作为实施方案，而不会同时实施多个方案，那么子问题就是独立的。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>7</span><span style="font-family: 宋体;">、考虑如何做备忘录。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>8</span><span style="font-family: 宋体;">、分析所需时间是否满足要求。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>9</span><span style="font-family: 宋体;">、写出转移方程式。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第五节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">练习</span><span lang="EN-US">-------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">题目一：买书</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">有一书店引进了一套书，共有</span><span lang="EN-US">3</span><span style="font-family: 宋体;">卷，每卷书定价是</span><span lang="EN-US">60</span><span style="font-family: 宋体;">元，书店为了搞促销，推出一个活动，活动如下：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">如果单独购买其中一卷，那么可以打</span><span lang="EN-US">9.5</span><span style="font-family: 宋体;">折。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">如果同时购买两卷不同的，那么可以打</span><span lang="EN-US">9</span><span style="font-family: 宋体;">折。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">如果同时购买三卷不同的，那么可以打</span><span lang="EN-US">8.5</span><span style="font-family: 宋体;">折。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">如果小明希望购买第</span><span lang="EN-US">1</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">x</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">2</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">y</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">3</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">z</span><span style="font-family: 宋体;">本，那么至少需要多少钱呢？（</span><span lang="EN-US">x</span><span style="font-family: 宋体;">、</span><span lang="EN-US">y</span><span style="font-family: 宋体;">、</span><span lang="EN-US">z</span><span style="font-family: 宋体;">为三个已知整数）。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">当然，这道题完全可以不用动态规划来解，但是现在我们是要学习动态规划，因此请想想如何用动态规划来做？</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">答案：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>1</span><span style="font-family: 宋体;">、过程为一次一次的购买，每一次购买也许只买一本（这有三种方案），或者买两本（这也有三种方案），或者三本一起买（这有一种方案），最后直到买完所有需要的书。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>2</span><span style="font-family: 宋体;">、最后一步我必然会在</span><span lang="EN-US">7</span><span style="font-family: 宋体;">种购买方案中选择一种，因此我要在</span><span lang="EN-US">7</span><span style="font-family: 宋体;">种购买方案中选择一个最佳情况。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>3</span><span style="font-family: 宋体;">、子问题是，我选择了某个方案后，如何使得购买剩余的书能用最少的钱？并且这个选择不会使得剩余的书为负数。母问题和子问题都是给定三卷书的购买量，求最少需要用的钱，所以有“子问题重叠”，问题中三个购买量设置为参数，分别为</span><span lang="EN-US">i</span><span style="font-family: 宋体;">、</span><span lang="EN-US">j</span><span style="font-family: 宋体;">、</span><span lang="EN-US">k</span><span style="font-family: 宋体;">。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>4</span><span style="font-family: 宋体;">、的确符合。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>5</span><span style="font-family: 宋体;">、边界是一次购买就可以买完所有的书，处理方式请读者自己考虑。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>6</span><span style="font-family: 宋体;">、每次选择最多有</span><span lang="EN-US">7</span><span style="font-family: 宋体;">种方案，并且不会同时实施其中多种，因此方案的选择互不影响，所以有“子问题独立”。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>7</span><span style="font-family: 宋体;">、我可以用</span><span lang="EN-US">minMoney[i][j][k]</span><span style="font-family: 宋体;">来保存购买第</span><span lang="EN-US">1</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">i</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">2</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">j</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">3</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">k</span><span style="font-family: 宋体;">本时所需的最少金钱。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>8</span><span style="font-family: 宋体;">、共有</span><span lang="EN-US">x * y * z </span><span style="font-family: 宋体;">个问题，每个问题面对</span><span lang="EN-US">7</span><span style="font-family: 宋体;">种选择，时间为：</span><span lang="EN-US">O( x * y * z * 7) =<span>&nbsp; </span>O( x * y * z )</span><span style="font-family: 宋体;">。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>9</span><span style="font-family: 宋体;">、用函数</span><span lang="EN-US">MinMoney(i,j,k)</span><span style="font-family: 宋体;">来表示购买第</span><span lang="EN-US">1</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">i</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">2</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">j</span><span style="font-family: 宋体;">本，第</span><span lang="EN-US">3</span><span style="font-family: 宋体;">卷</span><span lang="EN-US">k</span><span style="font-family: 宋体;">本时所需的最少金钱，那么有：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>MinMoney(i,j,k)=min(s1,s2,s3,s4,s5,s6,s7),</span><span style="font-family: 宋体;">其中</span><span lang="EN-US">s1,s2,s3,s4,s5,s6,s7</span><span style="font-family: 宋体;">分别为对应的</span><span lang="EN-US">7</span><span style="font-family: 宋体;">种方案使用的最少金钱：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s1 = 60 * 0.95 + MinMoney(i-1,j,k)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s2 = 60 * 0.95 + MinMoney(i,j-1,k)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s3 = 60 * 0.95 + MinMoney(i,j,k-1)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s4 = (60 + 60) * 0.9 + MinMoney(i-1,j-1,k)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s5 = (60 + 60) * 0.9 + MinMoney(i-1,j,k-1)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s6 = (60 + 60) * 0.9 + MinMoney(i-1,j,k-1)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>s7 = (60 + 60 + 60) * 0.85 + MinMoney(i-1,j-1,k-1)</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US">----</span><span style="font-family: 宋体;">第六节</span><span lang="EN-US">----</span><span style="font-family: 宋体;">代码参考</span><span lang="EN-US">------</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">下面提供金矿问题的程序源代码帮助读者理解，并提供测试数据给大家练习。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输入文件名为“</span><span lang="EN-US">beibao.in</span><span style="font-family: 宋体;">”，因为这个问题实际上就是背包问题，所以测试数据文件名就保留原名吧。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输入文件第一行有两个数，第一个是国王可用用来开采金矿的总人数，第二个是总共发现的金矿数。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输入文件的第</span><span lang="EN-US">2</span><span style="font-family: 宋体;">至</span><span lang="EN-US">n+1</span><span style="font-family: 宋体;">行每行有两个数，第</span><span lang="EN-US">i</span><span style="font-family: 宋体;">行的两个数分别表示第</span><span lang="EN-US">i-1</span><span style="font-family: 宋体;">个金矿需要的人数和可以得到的金子数。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输出文件仅一个整数，表示能够得到的最大金子数。</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输入样例：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>100 5</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>77 92</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>22 22</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>29 87</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>50 46</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>99 90</span></p>
+<p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">输出样例：</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>133</span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></p>
+<p class="MsoNormal"><span lang="EN-US"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span style="font-family: 宋体;">参考代码如下：</span></p>
+
+<p>&nbsp;&nbsp; </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #008000;">/*</span><span style="color: #008000;"><br>
+=========程序信息========<br>
+对应题目：01背包之金矿模型<br>
+使用语言：c++<br>
+使用编译器：Visual&nbsp;Studio&nbsp;2005.NET<br>
+使用算法：动态规划<br>
+算法运行时间：O(people&nbsp;*&nbsp;n)&nbsp;[people是人数，n是金矿数]<br>
+作者：贵州大学05级&nbsp;刘永辉&nbsp;<br>
+昵称：SDJL<br>
+编写时间：2008年8月<br>
+联系QQ：44561907<br>
+E-Mail：44561907@qq.com<br>
+获得更多文章请访问我的博客：www.cnblogs.com/sdjl<br>
+如果发现BUG或有写得不好的地方请发邮件告诉我:)<br>
+转载请保留此部分信息:)<br>
+</span><span style="color: #008000;">*/</span><span style="color: #000000;"><br>
+<br>
+#include&nbsp;</span><span style="color: #800000;">"</span><span style="color: #800000;">stdafx.h</span><span style="color: #800000;">"</span><span style="color: #000000;"><br>
+#include&nbsp;</span><span style="color: #000000;">&lt;</span><span style="color: #000000;">iostream</span><span style="color: #000000;">&gt;</span><span style="color: #000000;"><br>
+#include&nbsp;</span><span style="color: #000000;">&lt;</span><span style="color: #000000;">fstream</span><span style="color: #000000;">&gt;</span><span style="color: #000000;"><br>
+</span><span style="color: #0000ff;">using</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">namespace</span><span style="color: #000000;">&nbsp;std;<br>
+<br>
+</span><span style="color: #0000ff;">const</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;max_n&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">100</span><span style="color: #000000;">;</span><span style="color: #008000;">//</span><span style="color: #008000;">程序支持的最多金矿数</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">const</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;max_people&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">10000</span><span style="color: #000000;">;</span><span style="color: #008000;">//</span><span style="color: #008000;">程序支持的最多人数</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;n;</span><span style="color: #008000;">//</span><span style="color: #008000;">金矿数</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;peopleTotal;</span><span style="color: #008000;">//</span><span style="color: #008000;">可以用于挖金子的人数</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;peopleNeed[max_n];</span><span style="color: #008000;">//</span><span style="color: #008000;">每座金矿需要的人数</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;gold[max_n];</span><span style="color: #008000;">//</span><span style="color: #008000;">每座金矿能够挖出来的金子数</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;maxGold[max_people][max_n];</span><span style="color: #008000;">//</span><span style="color: #008000;">maxGold[i][j]保存了i个人挖前j个金矿能够得到的最大金子数，等于-1时表示未知<br>
+<br>
+</span><span style="color: #008000;">//</span><span style="color: #008000;">初始化数据&nbsp;</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;">&nbsp;init()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ifstream&nbsp;inputFile(</span><span style="color: #800000;">"</span><span style="color: #800000;">beibao.in</span><span style="color: #800000;">"</span><span style="color: #000000;">);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inputFile</span><span style="color: #000000;">&gt;&gt;</span><span style="color: #000000;">peopleTotal</span><span style="color: #000000;">&gt;&gt;</span><span style="color: #000000;">n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">for</span><span style="color: #000000;">(</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;i</span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">;&nbsp;i</span><span style="color: #000000;">&lt;</span><span style="color: #000000;">n;&nbsp;i</span><span style="color: #000000;">++</span><span style="color: #000000;">)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inputFile</span><span style="color: #000000;">&gt;&gt;</span><span style="color: #000000;">peopleNeed[i]</span><span style="color: #000000;">&gt;&gt;</span><span style="color: #000000;">gold[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;inputFile.close();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">for</span><span style="color: #000000;">(</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;i</span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">;&nbsp;i</span><span style="color: #000000;">&lt;=</span><span style="color: #000000;">peopleTotal;&nbsp;i</span><span style="color: #000000;">++</span><span style="color: #000000;">)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">for</span><span style="color: #000000;">(</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;j</span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">;&nbsp;j</span><span style="color: #000000;">&lt;</span><span style="color: #000000;">n;&nbsp;j</span><span style="color: #000000;">++</span><span style="color: #000000;">)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxGold[i][j]&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #000000;">-</span><span style="color: #800080;">1</span><span style="color: #000000;">;</span><span style="color: #008000;">//</span><span style="color: #008000;">等于-1时表示未知&nbsp;[对应动态规划中的“做备忘录”]</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+}<br>
+<br>
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获得在仅有people个人和前mineNum个金矿时能够得到的最大金子数，注意“前多少个”也是从0开始编号的</span><span style="color: #008000;"><br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;GetMaxGold(</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;people,&nbsp;</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;mineNum)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">申明返回的最大金子数</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;retMaxGold;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">如果这个问题曾经计算过&nbsp;&nbsp;[对应动态规划中的“做备忘录”]</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(maxGold[people][mineNum]&nbsp;</span><span style="color: #000000;">!=</span><span style="color: #000000;">&nbsp;</span><span style="color: #000000;">-</span><span style="color: #800080;">1</span><span style="color: #000000;">)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">获得保存起来的值</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retMaxGold&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;maxGold[people][mineNum];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">else</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(mineNum&nbsp;</span><span style="color: #000000;">==</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">0</span><span style="color: #000000;">)</span><span style="color: #008000;">//</span><span style="color: #008000;">如果仅有一个金矿时&nbsp;[对应动态规划中的“边界”]</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">当给出的人数足够开采这座金矿</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(people&nbsp;</span><span style="color: #000000;">&gt;=</span><span style="color: #000000;">&nbsp;peopleNeed[mineNum])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">得到的最大值就是这座金矿的金子数</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retMaxGold&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;gold[mineNum];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">else</span><span style="color: #008000;">//</span><span style="color: #008000;">否则这唯一的一座金矿也不能开采</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">得到的最大值为0个金子</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retMaxGold&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">0</span><span style="color: #000000;">;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">else</span><span style="color: #000000;">&nbsp;</span><span style="color: #0000ff;">if</span><span style="color: #000000;">(people&nbsp;</span><span style="color: #000000;">&gt;=</span><span style="color: #000000;">&nbsp;peopleNeed[mineNum])</span><span style="color: #008000;">//</span><span style="color: #008000;">如果给出的人够开采这座金矿&nbsp;[对应动态规划中的“最优子结构”]</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">考虑开采与不开采两种情况，取最大值</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retMaxGold&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;max(GetMaxGold(people&nbsp;</span><span style="color: #000000;">-</span><span style="color: #000000;">&nbsp;peopleNeed[mineNum],mineNum&nbsp;</span><span style="color: #000000;">-</span><span style="color: #800080;">1</span><span style="color: #000000;">)&nbsp;</span><span style="color: #000000;">+</span><span style="color: #000000;">&nbsp;gold[mineNum],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GetMaxGold(people,mineNum&nbsp;</span><span style="color: #000000;">-</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">1</span><span style="color: #000000;">));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">else</span><span style="color: #008000;">//</span><span style="color: #008000;">否则给出的人不够开采这座金矿&nbsp;[对应动态规划中的“最优子结构”]</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">仅考虑不开采的情况</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retMaxGold&nbsp;&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;GetMaxGold(people,mineNum&nbsp;</span><span style="color: #000000;">-</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">1</span><span style="color: #000000;">);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">做备忘录&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;maxGold[people][mineNum]&nbsp;</span><span style="color: #000000;">=</span><span style="color: #000000;">&nbsp;retMaxGold;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">return</span><span style="color: #000000;">&nbsp;retMaxGold;<br>
+}<br>
+<br>
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;_tmain(</span><span style="color: #0000ff;">int</span><span style="color: #000000;">&nbsp;argc,&nbsp;_TCHAR</span><span style="color: #000000;">*</span><span style="color: #000000;">&nbsp;argv[])<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">初始化数据</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;init();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000;">//</span><span style="color: #008000;">输出给定peopleTotal个人和n个金矿能够获得的最大金子数，再次提醒编号从0开始，所以最后一个金矿编号为n-1</span><span style="color: #008000;"><br>
+</span><span style="color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;cout</span><span style="color: #000000;">&lt;&lt;</span><span style="color: #000000;">GetMaxGold(peopleTotal,n</span><span style="color: #000000;">-</span><span style="color: #800080;">1</span><span style="color: #000000;">);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;system(</span><span style="color: #800000;">"</span><span style="color: #800000;">pause</span><span style="color: #800000;">"</span><span style="color: #000000;">);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff;">return</span><span style="color: #000000;">&nbsp;</span><span style="color: #800080;">0</span><span style="color: #000000;">;<br>
+}<br>
+<br>
+</span><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/SDJL/category/151688.html" target="_blank">不错的</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/SDJL/tag/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>, <a href="http://www.cnblogs.com/SDJL/tag/01%E8%83%8C%E5%8C%85/">01背包</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(1274312,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;ce42420b-63cf-dd11-9e4d-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/SDJL/" target="_blank"><img src="./通过金矿模型介绍动态规划 - 刘永辉 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/SDJL/">刘永辉</a><br>
+            <a href="http://home.cnblogs.com/u/SDJL/followees">关注 - 0</a><br>
+            <a href="http://home.cnblogs.com/u/SDJL/followers">粉丝 - 21</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;ce42420b-63cf-dd11-9e4d-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(1274312,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">34</span>
+    </div>
+    <div class="buryit" onclick="votePost(1274312,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1273759.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1273759.html" title="发布于2008-08-22 09:32">noip2003提高组之加分二叉树</a><br><a href="http://www.cnblogs.com/SDJL/archive/2008/08/28/1278803.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/SDJL/archive/2008/08/28/1278803.html" title="发布于2008-08-28 17:05">noip2006提高组之金明的预算方案</a><br></div>
+</div>
+
+
+	<div class="postDesc">posted on <span id="post-date">2008-08-22 18:27</span> <a href="http://www.cnblogs.com/SDJL/">刘永辉</a> 阅读(<span id="post_view_count">32484</span>) 评论(<span id="post_comment_count">66</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=1274312" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/sdjl/articles/1274312.html#" onclick="AddToWz(1274312);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,cb_blogId=39275,cb_entryId=1274312,cb_blogApp=currentBlogApp,cb_blogUserGuid='ce42420b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2008/8/22 18:27:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"><div class="pager"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div>
+<!--done-->
+<br>
+<b>FeedBack:</b>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3265705" class="layer">#51楼</a><a name="3265705" id="comment_anchor_3265705"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2015-09-13 11:22</span> | <a id="a_comment_author_3265705" href="http://home.cnblogs.com/u/787680/" target="_blank">uxiaolang</a> <a href="http://msg.cnblogs.com/send/uxiaolang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3265705" class="blog_comment_body">很好，学习了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3265705,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3265705,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3276689" class="layer">#52楼</a><a name="3276689" id="comment_anchor_3276689"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2015-09-29 15:18</span> | <a id="a_comment_author_3276689" href="http://www.cnblogs.com/LostChristmas/" target="_blank">失落の圣诞节</a> <a href="http://msg.cnblogs.com/send/%E5%A4%B1%E8%90%BD%E3%81%AE%E5%9C%A3%E8%AF%9E%E8%8A%82" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3276689" class="blog_comment_body">写得非常好~感觉有所启发，谢谢！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3276689,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3276689,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3276689_avatar" style="display:none;">http://pic.cnblogs.com/face/709870/20161022174954.png</span>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3284800" class="layer">#53楼</a><a name="3284800" id="comment_anchor_3284800"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2015-10-14 20:03</span> | <a id="a_comment_author_3284800" href="http://home.cnblogs.com/u/822774/" target="_blank">Flesh_Noob</a> <a href="http://msg.cnblogs.com/send/Flesh_Noob" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3284800" class="blog_comment_body">所提解法只给出了最有结果，那么最优步骤有什么好的方法得到？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3284800,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3284800,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3324736" class="layer">#54楼</a><a name="3324736" id="comment_anchor_3324736"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2015-12-10 21:12</span> | <a id="a_comment_author_3324736" href="http://www.cnblogs.com/xsoftlab/" target="_blank">XSoftlab</a> <a href="http://msg.cnblogs.com/send/XSoftlab" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3324736" class="blog_comment_body">顶起，写的太好了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3324736,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3324736,&#39;Bury&#39;,this)">反对(1)</a></div><span id="comment_3324736_avatar" style="display:none;">http://pic.cnblogs.com/face/395139/20140617125129.png</span>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3341317" class="layer">#55楼</a><a name="3341317" id="comment_anchor_3341317"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-01-05 14:26</span> | <a id="a_comment_author_3341317" href="http://home.cnblogs.com/u/691826/" target="_blank">YYKKWW</a> <a href="http://msg.cnblogs.com/send/YYKKWW" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3341317" class="blog_comment_body">讲的很好 感谢作者</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3341317,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3341317,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3378351" class="layer">#56楼</a><a name="3378351" id="comment_anchor_3378351"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-03-11 19:51</span> | <a id="a_comment_author_3378351" href="http://www.cnblogs.com/lutongxi/" target="_blank">Minepressure</a> <a href="http://msg.cnblogs.com/send/Minepressure" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3378351" class="blog_comment_body">写的很好   顶一个！！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3378351,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3378351,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3434580" class="layer">#57楼</a><a name="3434580" id="comment_anchor_3434580"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-05-19 09:59</span> | <a id="a_comment_author_3434580" href="http://home.cnblogs.com/u/960059/" target="_blank">s_sj</a> <a href="http://msg.cnblogs.com/send/s_sj" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3434580" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3434580,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3434580,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3445739" class="layer">#58楼</a><a name="3445739" id="comment_anchor_3445739"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-06-04 11:30</span> | <a id="a_comment_author_3445739" href="http://home.cnblogs.com/u/198543/" target="_blank">银翼魔术师</a> <a href="http://msg.cnblogs.com/send/%E9%93%B6%E7%BF%BC%E9%AD%94%E6%9C%AF%E5%B8%88" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3445739" class="blog_comment_body">写的很好，非常感谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3445739,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3445739,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3465725" class="layer">#59楼</a><a name="3465725" id="comment_anchor_3465725"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-07-07 14:47</span> | <a id="a_comment_author_3465725" href="http://www.cnblogs.com/00100011F/" target="_blank">brant-ruan</a> <a href="http://msg.cnblogs.com/send/brant-ruan" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3465725" class="blog_comment_body">感谢您的分享！<br>我已转载到我的博客(表明您这里的出处)。<br>谢谢！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3465725,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3465725,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3465725_avatar" style="display:none;">http://pic.cnblogs.com/face/882968/20160118202405.png</span>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3505406" class="layer">#60楼</a><a name="3505406" id="comment_anchor_3505406"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-09-07 16:59</span> | <a id="a_comment_author_3505406" href="http://home.cnblogs.com/u/1022596/" target="_blank">akita1987</a> <a href="http://msg.cnblogs.com/send/akita1987" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3505406" class="blog_comment_body">博主好厉害，讲得很清晰。<br>另外我发现这个地方是不是有一点小错误：<br>cout&lt;&lt;GetMaxGold(peopleTotal,n-1);<b>//此处是否应该是peopleTotal-1?</b><br><br>for(int i=0; i&lt;=peopleTotal; i++)<b>//此处是否应该是i&lt;peopleTotal?</b><br>        for(int j=0; j&lt;n; j++)<br>            maxGold[i][j] = -1;//等于-1时表示未知 [对应动态规划中的“做备忘录”]</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3505406,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3505406,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3506422" class="layer">#61楼</a><a name="3506422" id="comment_anchor_3506422"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-09-08 22:19</span> | <a id="a_comment_author_3506422" href="http://home.cnblogs.com/u/1023490/" target="_blank">kerwin92</a> <a href="http://msg.cnblogs.com/send/kerwin92" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3506422" class="blog_comment_body">好文，清晰易懂，怒赞</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3506422,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3506422,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3518602" class="layer">#62楼</a><a name="3518602" id="comment_anchor_3518602"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-09-24 15:18</span> | <a id="a_comment_author_3518602" href="http://home.cnblogs.com/u/1032339/" target="_blank">探索者丸丸号</a> <a href="http://msg.cnblogs.com/send/%E6%8E%A2%E7%B4%A2%E8%80%85%E4%B8%B8%E4%B8%B8%E5%8F%B7" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3518602" class="blog_comment_body">非常感谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3518602,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3518602,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3525120" class="layer">#63楼</a><a name="3525120" id="comment_anchor_3525120"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-10-07 16:47</span> | <a id="a_comment_author_3525120" href="http://home.cnblogs.com/u/1037538/" target="_blank">意涵团我想要offer</a> <a href="http://msg.cnblogs.com/send/%E6%84%8F%E6%B6%B5%E5%9B%A2%E6%88%91%E6%83%B3%E8%A6%81offer" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3525120" class="blog_comment_body">楼主写的真棒！<br>看完之后我想请教一下：如果问题中，挖一个金矿需要x个人，同时需要y头牛，x和y是相互独立的，其他条件不变，那么这个挖金矿问题该如何考虑呢？感谢！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3525120,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3525120,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3579090" class="layer">#64楼</a><a name="3579090" id="comment_anchor_3579090"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-12-13 10:01</span> | <a id="a_comment_author_3579090" href="http://www.cnblogs.com/mimangdewo-a1/" target="_blank">[Ger]JCS岛！</a> <a href="http://msg.cnblogs.com/send/%5BGer%5DJCS%E5%B2%9B%EF%BC%81" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3579090" class="blog_comment_body">弱：问，为什么会有相同的问题呢？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3579090,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3579090,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3593193" class="layer">#65楼</a><a name="3593193" id="comment_anchor_3593193"></a></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2016-12-30 15:44</span> | <a id="a_comment_author_3593193" href="http://www.cnblogs.com/chenzhuoli/" target="_blank">小丽的明天会更好</a> <a href="http://msg.cnblogs.com/send/%E5%B0%8F%E4%B8%BD%E7%9A%84%E6%98%8E%E5%A4%A9%E4%BC%9A%E6%9B%B4%E5%A5%BD" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3593193" class="blog_comment_body">写得很好，非常感谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3593193,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3593193,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3593193_avatar" style="display:none;">http://pic.cnblogs.com/face/1042087/20161021173437.png</span>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#3605116" class="layer">#66楼</a><a name="3605116" id="comment_anchor_3605116"></a><span id="comment-maxId" style="display:none;">3605116</span><span id="comment-maxDate" style="display:none;">2017/1/17 14:10:06</span></div>
+			<div class="feedbackListSubtitle">
+				 <span class="comment_date">2017-01-17 14:10</span> | <a id="a_comment_author_3605116" href="http://home.cnblogs.com/u/1096818/" target="_blank">jlu_nnbs</a> <a href="http://msg.cnblogs.com/send/jlu_nnbs" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><br>
+				<div align="left"><div id="comment_body_3605116" class="blog_comment_body">写的太好了，求转，开头会注明出处~</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3605116,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3605116,&#39;Bury&#39;,this)">反对(0)</a></div>&nbsp;&nbsp;<span class="comment_actions"></span></div>
+			</div>
+			
+			
+		</div>
+	
+
+
+
+<div id="comments_pager_bottom"><div class="pager"><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/sdjl/articles/1274312.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/566867/" target="_blank">微软发布Azure Functions Proxies公开预览版</a><br> ·  <a href="http://news.cnblogs.com/n/566866/" target="_blank">关于软件开发你真正需要知道的几个事情</a><br> ·  <a href="http://news.cnblogs.com/n/566865/" target="_blank">加拿大银行很极客 10元新纸币暗藏彩蛋</a><br> ·  <a href="http://news.cnblogs.com/n/566864/" target="_blank">葡萄城活字格V3.0强势发布，企业Web应用案例大赛火热进行中</a><br> ·  <a href="http://news.cnblogs.com/n/566863/" target="_blank">动图：SpaceX过去2年火箭回收心路历程回顾</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/509431/" target="_blank">如何打好前端游击战</a><br> ·  <a href="http://kb.cnblogs.com/page/564590/" target="_blank">技术文章的阅读姿势</a><br> ·  <a href="http://kb.cnblogs.com/page/565931/" target="_blank">马拉松式学习与技术人员的成长性</a><br> ·  <a href="http://kb.cnblogs.com/page/537434/" target="_blank">程序员的“认知失调”</a><br> ·  <a href="http://kb.cnblogs.com/page/559485/" target="_blank">为什么有的人工作多年还是老样子</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+<div id="leftcontent">
+	
+		<div id="leftcontentcontainer">
+			<br>			
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_categories">
+<!--done-->
+
+		<h1 class="catListTitle">随笔分类</h1>
+		
+				<ul class="catList">
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_0" class="listitem" href="http://www.cnblogs.com/SDJL/category/149700.html">NOIP题目讲解(5)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_1" class="listitem" href="http://www.cnblogs.com/SDJL/category/151688.html">不错的(3)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_2" class="listitem" href="http://www.cnblogs.com/SDJL/category/211632.html">读书笔记(1)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_3" class="listitem" href="http://www.cnblogs.com/SDJL/category/207529.html">经验值碎片(3)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_4" class="listitem" href="http://www.cnblogs.com/SDJL/category/154361.html">我的USACO(47)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_5" class="listitem" href="http://www.cnblogs.com/SDJL/category/151004.html">我的代码(3)</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_0_Link_6" class="listitem" href="http://www.cnblogs.com/SDJL/category/151684.html">性能分析(2)</a></li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">Online Judge</h1>
+		
+				<ul class="catList">
+			
+				<li class="catListItem"> <a id="CatList_LinkList_1_Link_0" class="listitem" href="http://code.google.com/codejam/" rel="nofollow" target="_blank">google code jam</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_1_Link_1" class="listitem" href="http://ace.delos.com/usacogate" rel="nofollow" target="_blank">USACO</a></li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">推荐博客</h1>
+		
+				<ul class="catList">
+			
+				<li class="catListItem"> <a id="CatList_LinkList_2_Link_0" class="listitem" href="http://www.matrix67.com/blog/" rel="nofollow" target="_blank">Matrix67 的博客</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_2_Link_1" class="listitem" href="http://against.isgreat.org/" rel="nofollow" target="_blank">到二不着三</a></li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">推荐网站</h1>
+		
+				<ul class="catList">
+			
+				<li class="catListItem"> <a id="CatList_LinkList_3_Link_0" class="listitem" href="http://www.douban.com/" rel="nofollow" target="_blank">豆瓣</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_3_Link_1" class="listitem" href="http://www.china-pub.com/" rel="nofollow" target="_blank">互动出版网</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_3_Link_2" class="listitem" href="http://www.wwenglish.com/t/d/" rel="nofollow" target="_blank">旺旺英语听力</a></li>
+			
+				</ul>
+			
+	
+		<h1 class="catListTitle">信息学论坛</h1>
+		
+				<ul class="catList">
+			
+				<li class="catListItem"> <a id="CatList_LinkList_4_Link_0" class="listitem" href="http://www.oibh.org/bbs/index.php" rel="nofollow" target="_blank">OIBH信息学初学者之家</a></li>
+			
+				<li class="catListItem"> <a id="CatList_LinkList_4_Link_1" class="listitem" href="http://bbs.oifans.cn/" rel="nofollow" target="_blank">OI爱好者</a></li>
+			
+				</ul>
+			
+	
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<h3 class="catListTitle">最新评论</h3>
+<div class="RecentComment" id="RecentComments">
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html#3605116">1. Re:通过金矿模型介绍动态规划</a></li>
+        <li class="recent_comment_body">写的太好了，求转，开头会注明出处~</li>
+        <li class="recent_comment_author">--jlu_nnbs</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html#3593193">2. Re:通过金矿模型介绍动态规划</a></li>
+        <li class="recent_comment_body">写得很好，非常感谢</li>
+        <li class="recent_comment_author">--小丽的明天会更好</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html#3579090">3. Re:通过金矿模型介绍动态规划</a></li>
+        <li class="recent_comment_body">弱：问，为什么会有相同的问题呢？</li>
+        <li class="recent_comment_author">--[Ger]JCS岛！</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html#3525120">4. Re:通过金矿模型介绍动态规划</a></li>
+        <li class="recent_comment_body">楼主写的真棒！<br>看完之后我想请教一下：如果问题中，挖一个金矿需要x个人，同时需要y头牛，x和y是相互独立的，其他条件不变，那么这个挖金矿问题该如何考虑呢？感谢！</li>
+        <li class="recent_comment_author">--意涵团我想要offer</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/SDJL/archive/2008/08/22/1274312.html#3518602">5. Re:通过金矿模型介绍动态规划</a></li>
+        <li class="recent_comment_body">非常感谢</li>
+        <li class="recent_comment_author">--探索者丸丸号</li>
+</ul>
+</div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script></div>
+	
+</div>
+
+
+<!--done-->
+<div class="footer">
+	
+	Copyright ©2017 刘永辉 Powered By<a href="http://www.cnblogs.com/">博客园</a> 模板提供：<a href="http://blog.hjenglish.com/">沪江博客</a>
+</div>
+
+
+</body></html>
