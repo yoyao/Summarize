@@ -95,8 +95,21 @@ sigemptyset  ÉèÖÃ×èÈûÐÅºÅ¼¯ ÕâÑùÔÚ³ÌÐòÖ´ÐÐÆÚ¼ä Èç¹ûÓöµ½×èÈûÐÅºÅ¼¯ÖÐµÄÐÅºÅ£¬ÏµÍ³½
 ==================================================================================================================
 pthread_cond_wait();
 µ±¼±ÐèÄ³¸öÌõ¼þ³ÉÁ¢Ê±£¬ÎÒ²ÅÄÜ¼ÌÐøÖ´ÐÐÏÂÈ¥£¬ÕâÑù²Å»áÊ¹ÓÃÌõ¼þ±äÁ¿µÈ´ýÆäÌõ¼þ³ÉÁ¢¡£Èç¹ûÎÒÖ»ÊÇÐèÒªÄ³¸ö×ÊÔ´£¬ÓÃmutex¾Í¿ÉÒÔÁË¡£
+#include<pwd.h>
+#include <sys/types.h>
 
+getpwnam(char* username)//Í¨¹ýÓÃ»§ÃûÀ´»ñÈ¡ÃÜÂëÐÅÏ¢
 
+getspwnam(char* username)//Í¨¹ýÓÃ»§ÃûÀ´»ñÈ¡shadowÃÜÂëÐÅÏ¢
 
+crypt(char* key,char* salt);//DES¼ÓÃÜ·½·¨  linuxÖÐµÄÃÜÂëÊÇÓÃËüÀ´¼ÓÃÜµÄ
+
+set-User-ID  ÔÚÆäËûÓÃ»§ÓµÓÐÖ´ÐÐÈ¨ÏÞµÄÇé¿öÏÂ£¬ÔÊÐíÆäËûÓÃ»§ÔÝÊ±ÒÔ´Ë³ÌÐòµÄËùÓÐÕßµÄÈ¨ÏÞÔËÐÐ,ÔÚ³ÌÐò½áÊøºó»Ö¸´Éí·Ý¡£
+¼ÙÈçÎÒµÄÒ»¸ö³ÌÐòµÄËùÓÐÕßÊÇroot ÎÒÎªÕâ¸ö³ÌÐòÉèÖÃÁË chmod u+s £¬ÄÇÃ´ÆäËûÓÃ»§ÔËÐÐ´Ë³ÌÐòÊ±£¬»áÒÔrootÈ¨ÏÞÔËÐÐ¡£
+Èç¹ûÕâ¸ö³ÌÐòµÄËùÓÐÕßÊÇfgo,ÄÇÃ´ÔËÐÐÊ±µÄÈ¨ÏÞÊÇfgo
+
+chmod u+s ¸øÄ³Ò»¸öÎÄ¼þsuidµÄÈ¨Àû
+
+Ö»ÓÐÕæÊµÓÃ»§ID(real ID)»òÊµ¼ÊÓÃ»§ID(efficktive ID)ÏàÍ¬µÄ½ø³Ì²Å¿ÉÒÔ»¥Ïà·¢ËÍÐÅºÅ¡£
 
 */
