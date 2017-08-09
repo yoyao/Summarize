@@ -1,17 +1,25 @@
 
 /*
-�����ֻ��һ��������������Ĭ�ϲ����Ĺ��캯������ônew���޷�new�����������ġ�
+如果类只有一个带参数并且无默认参数的构造函数，那么new是无法new出此类的数组的。
 
-Person* p=operator new (size_t) ֻ�����ڴ棬������ù��캯����
+Person* p=operator new (size_t) 只申请内存，不会调用构造函数。
 
-new(p) Person();  ��p��ָ����ڴ��е���Person�Ĺ��캯������һ������ (placement new �ڴ�Ķ�λ����)
+new(p) Person();  在p所指向的内存中调用Person的构造函数创建一个对象 (placement new 内存的定位放置)
 
 
-static�ĳ�Ա�����ǲ����Է������ڵķǾ�̬��Ա�����ġ���Ϊstatic�ĳ�Ա�ڱ���׶ξͻ�������ڴ棬������ʵ�ڳ�ʼ����ʱ��ֵ�����ܻ���ʳ�����
+static的成员函数是不可以访问类内的非静态成员变量的。因为static的成员在编译阶段就会给分配内存，其他的实在初始化的时候赋值。可能会访问出错。
 
-static�ĳ�Ա�����ͱ����ǹ����� ���� �������ٸ�����static��Ա����ָ���ʼ��ʼ������һ���ڴ档
+static的成员函数和变量是共享的 ，即 创建多少个对象，static成员都是指向最开始初始化的那一块内存。
 
-�����߳��ǵ�ʱ�� ����������ĳ�Ա���� ֻ����ȫ�ֺ�����
+创建线程是的时候 不可以用类的成员函数 只能用全局函数。
+
+不可以同时用const和static修饰成员函数。
+C++编译器在实现const的成员函数的时候为了确保该函数不能修改类的实例的状态，会在函数中添加一个隐式的参数const this*。但当一个成员为static的时候，该函数是没有this指针的。也就是说此时const的用法和static是冲突的。
+
+
+
+
+
 
 
 */
