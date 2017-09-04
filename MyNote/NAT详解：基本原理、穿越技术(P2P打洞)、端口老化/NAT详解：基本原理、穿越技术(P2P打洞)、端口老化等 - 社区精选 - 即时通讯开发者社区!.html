@@ -1,0 +1,755 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0037)http://www.52im.net/article-64-1.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+<title>NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 -  即时通讯开发者社区!</title>
+
+<meta name="keywords" content="NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等">
+<meta name="description" content="这是一篇介绍NAT技术要点的精华文章，来自华3通信官方资料库，文中对NAT技术原理的介绍很全面也很权威，对网络应用的应用层开发人员而言有很高的参考价值。 ,即时通讯网">
+<meta name="generator" content="WordPress 4.7-beta4-39346">
+<meta name="author" content="52IM.NET">
+<meta name="copyright" content="2007-2015 (c) Nettime Co. Ltd.">
+<meta name="MSSmartTagsPreventParsing" content="True">
+<meta http-equiv="MSThemeCompatible" content="Yes">
+<!--<base href="http://www.52im.net/">--><base href="."><link rel="stylesheet" type="text/css" href="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/style_7_common.css"><link rel="stylesheet" type="text/css" href="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/style_7_portal_view.css"> 
+    <script src="http://hm.baidu.com/hm.js?bda50b4d01749abc4f2e1a002524ecd1"></script><script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/jquery.min.js.下载" type="text/javascript"></script>  
+<script type="text/javascript">var STYLEID = '7', STATICURL = 'static/', IMGDIR = 'template/qu_115style/images', VERHASH = 'BJy', charset = 'gbk', discuz_uid = '0', cookiepre = '1z6p_446c_', cookiedomain = '.52im.net', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = 'newthread', creditnotice = '1|威望|,2|金币|,3|贡献|', defaultstyle = '', REPORTURL = 'aHR0cDovL3d3dy41MmltLm5ldC9hcnRpY2xlLTY0LTEuaHRtbA==', SITEURL = 'http://www.52im.net/', JSPATH = 'static/js/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';var q_jq=jQuery.noConflict();</script>
+<script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/common.js.下载" type="text/javascript"></script>
+
+<meta name="application-name" content="即时通讯网">
+<meta name="msapplication-tooltip" content="即时通讯网">
+<meta name="msapplication-task" content="name=首页;action-uri=http://www.52im.net;icon-uri=http://www.52im.net/template/qu_115style/images/portal.ico"><meta name="msapplication-task" content="name=社区;action-uri=http://www.52im.net/forum.php;icon-uri=http://www.52im.net/template/qu_115style/images/bbs.ico">
+<meta name="msapplication-task" content="name=群组;action-uri=http://www.52im.net/group.php;icon-uri=http://www.52im.net/template/qu_115style/images/group.ico"><meta name="msapplication-task" content="name=动态;action-uri=http://www.52im.net/home.php;icon-uri=http://www.52im.net/template/qu_115style/images/home.ico"><script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/portal.js.下载" type="text/javascript"></script>
+<link href="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!--[if IE 7]>
+<link href="http://cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+
+    <script type="text/javascript">
+<!--
+window.onerror=function(){return true;}
+// -->
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?bda50b4d01749abc4f2e1a002524ecd1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<style id="3f80bc57-2505-45ad-9bf0-aa2d6929033a">#rwl-iqxin{position:fixed;top:0;left:0px;transform:translate(-62px,0);width:58px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;}#rwl-iqxin.rwl-active-iqxin{transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}</style><style id="5087c5b7-9ef4-4d91-b301-d043cb14288d">#jumpToTopBtn {
+    position: fixed;
+    right: -45px;
+    bottom: 100px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 10px;
+    opacity: 1;
+    background: -webkit-linear-gradient(top, rgba(0, 139, 139, 0.5), rgba(0, 74, 105, 0.8));
+    z-index: 99999999999;
+    color: white;
+    cursor:pointer;
+    font-size: 15px;
+    display: none;
+    -webkit-transition:right 0.5s; /* Safari and Chrome */
+    transition: right 0.5s;
+}
+
+#jumpToTopBtn:hover {
+    right: -10px;
+}</style><style id="3c335782-258e-4862-969e-41318542df3d">#icibaCirclePointer{font-family:"Microsoft Yahei",serif,sans-serif!important;display:block!important;z-index:10000!important;overflow:hidden!important;width:20px!important;height:20px!important;border:1px solid #555!important;border-radius:100px!important;background:#ABD!important;box-shadow:0 0 3px #111!important;opacity:.7!important;transition:.05s!important;box-sizing:border-box!important;-moz-box-sizing:border-box!important}#icibaCirclePointer:hover{opacity:1!important}#icibaCirclePointer:active{border:1px solid #353535!important;background:#90a2c4!important;box-shadow:0 0 3px #222!important}#icibaResultContainer{z-index:10000!important;width:auto!important;height:auto!important;max-width:320px!important;border:none!important;background:#EEE!important;box-shadow:0 0 8px 1px #999!important;letter-spacing:0!important}#icibaResultContainer *{box-sizing:border-box!important;-moz-box-sizing:border-box!important}#iciba_search_box{display:block!important;margin:0!important;padding:0!important;width:100%!important;border-bottom:1px solid #CCC!important;font-size:0!important;letter-spacing:0!important;word-spacing:0!important}#icibaResultContainer input{position:static!important;margin:0!important;border-radius:0!important;box-shadow:none!important;box-sizing:border-box!important;-moz-box-sizing:border-box!important;display:inline-block!important;vertical-align:middle!important;float:none!important}#iciba_search_box>#icibaSearchInput{padding:0 7px!important;width:calc(100% - 87px)!important;border:none!important;height:28px!important;line-height:28px!important;background:white!important;color:#666!important;font-size:14px!important;letter-spacing:0!important;font-family:"Microsoft Yahei",serif,sans-serif!important}#icibaSearchInput:hover,#icibaSearchInput:focus{box-shadow:0 0 3px 0 #CCC inset!important;color:#222!important}.icibaSearchButton{padding:0!important;width:29px!important;height:28px!important;border-radius:0!important;background-color:#EEE!important;background-repeat:no-repeat!important;border:none!important;border-left:1px solid #CCC!important}.icibaSearchButton:hover{background-color:#fafafa!important}.icibaSearchButton:active{background-color:#e5e5e5!important;box-shadow:0 0 2px #888 inset!important}#icibaSearchButton{background-image:url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNTYuOTY2IDU2Ljk2NiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTYuOTY2IDU2Ljk2NjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgogICAgPHBhdGgKICAgICAgICBkPSJNNTUuMTQ2LDUxLjg4N0w0MS41ODgsMzcuNzg2YzMuNDg2LTQuMTQ0LDUuMzk2LTkuMzU4LDUuMzk2LTE0Ljc4NmMwLTEyLjY4Mi0xMC4zMTgtMjMtMjMtMjNzLTIzLDEwLjMxOC0yMywyMyBzMTAuMzE4LDIzLDIzLDIzYzQuNzYxLDAsOS4yOTgtMS40MzYsMTMuMTc3LTQuMTYybDEzLjY2MSwxNC4yMDhjMC41NzEsMC41OTMsMS4zMzksMC45MiwyLjE2MiwwLjkyIGMwLjc3OSwwLDEuNTE4LTAuMjk3LDIuMDc5LTAuODM3QzU2LjI1NSw1NC45ODIsNTYuMjkzLDUzLjA4LDU1LjE0Niw1MS44ODd6IE0yMy45ODQsNmM5LjM3NCwwLDE3LDcuNjI2LDE3LDE3cy03LjYyNiwxNy0xNywxNyBzLTE3LTcuNjI2LTE3LTE3UzE0LjYxLDYsMjMuOTg0LDZ6IiBzdHlsZT0iZmlsbDogcmdiKDE4NywgMTg3LCAxODcpOyI+PC9wYXRoPgo8L3N2Zz4K")!important;background-position:center!important;background-size:15px 15px!important}#icibaSearchButtonTranslateGoogle{background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNzAgNzAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCI+CiAgICA8cGF0aAogICAgICAgIGZpbGw9IiM0Mjg1RjQiCiAgICAgICAgZD0iTTM1LjI5IDQxLjQxVjMySDY3Yy4zMSAxLjY0LjQ3IDMuNTguNDcgNS42OCAwIDcuMDYtMS45MyAxNS43OS04LjE1IDIyLjAxLTYuMDUgNi4zLTEzLjc4IDkuNjYtMjQuMDIgOS42NkMxNi4zMiA2OS4zNS4zNiA1My44OS4zNiAzNC45MS4zNiAxNS45MyAxNi4zMi40NyAzNS4zLjQ3YzEwLjUgMCAxNy45OCA0LjEyIDIzLjYgOS40OWwtNi42NCA2LjY0Yy00LjAzLTMuNzgtOS40OS02LjcyLTE2Ljk3LTYuNzItMTMuODYgMC0yNC43IDExLjE3LTI0LjcgMjUuMDMgMCAxMy44NiAxMC44NCAyNS4wMyAyNC43IDI1LjAzIDguOTkgMCAxNC4xMS0zLjYxIDE3LjM5LTYuODkgMi42Ni0yLjY2IDQuNDEtNi40NiA1LjEtMTEuNjVsLTIyLjQ5LjAxeiIvPgo8L3N2Zz4K")!important;background-size:15px 15px!important;background-position:center!important}#icibaSearchButtonTranslateBaidu{background-image:url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iOTBweCIgaGVpZ2h0PSI5MHB4IiB2aWV3Qm94PSIwIDAgOTAgOTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDkwIDkwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQoJPHBhdGggaWQ9IkJhaWR1IiBkPSJNMjQuMDEyLDMzLjU4OGMwLjUzNSw3LjY1LTMuNjExLDE0LjE3My05LjI2NCwxNC41N0M5LjA5Nyw0OC41NTUsNC4wODEsNDIuNjc1LDMuNTQ2LDM1LjAyMyAgIGMtMC41MzUtNy42NSwzLjYxMS0xNC4xNzQsOS4yNjQtMTQuNTcxQzE4LjQ2MiwyMC4wNTYsMjMuNDc4LDI1LjkzNywyNC4wMTIsMzMuNTg4eiBNNjIuOTM4LDEuODc0ICAgYy01LjQ5MS0xLjQwMS0xMS40NzQsMy40ODktMTMuMzYyLDEwLjkyMWMtMS44OTUsNy40MzIsMS4wMjMsMTQuNTkyLDYuNTE0LDE1Ljk5M2M1LjQ5LDEuNCwxMS40NzYtMy40ODgsMTMuMzY1LTEwLjkyMSAgIEM3MS45MTQsOC4xOTQsNjQuMjUzLDIuMjA4LDYyLjkzOCwxLjg3NHogTTc1LjgxMiwyNi45MjVjLTUuNzc1LDAuMDg2LTEwLjM1OSw1LjU3OS0xMC4yMzIsMTQuMDg4ICAgYzAuMTI3LDguNTA4LDQuOTA0LDEyLjM4NywxMC42ODUsMTIuMzAxYzUuNzcyLTAuMDg2LDEwLjM1OC00LjEwMywxMC4yMzMtMTIuNjE0Qzg2LjMzLDI5LjYyNiw3Ny4xOTUsMjYuOTA1LDc1LjgxMiwyNi45MjV6ICAgIE0zMy45NjUsMGMtNS40OTYsMC05Ljk1MSw2LjE2LTkuOTUxLDEzLjc1NmMwLDcuNTk2LDQuNDU1LDEzLjc1Myw5Ljk1MSwxMy43NTNjNS40OTYsMCw5Ljk1Mi02LjE1Nyw5Ljk1Mi0xMy43NTMgICBDNDMuOTE3LDYuMTYsMzkuNDYxLDAsMzMuOTY1LDB6IE0zMi42OTMsNDIuNzJjLTMuMTc1LDQuNTYtNi43NzUsOS4wMTEtMTMuNzYyLDE0Ljg0M2MtNi45ODgsNS44MzItOS45NTIsOS44NTgtOS45NTIsMTUuNzk1ICAgYzAsNS45MzYsMy4zODgsMTUuNzk1LDEzLjAyMiwxNS43OTVjOS42MzQsMCwxNC4yOTItMi4xMjEsMjEuOTE1LTIuMTIxYzcuNjIzLDAsMTIuNzA3LDIuOTY5LDIyLjMzOSwyLjk2OSAgIGM5LjYzNSwwLDEzLjY1OC05LjExNywxMy42NTgtMTUuMDUzYzAtNS45MzctMS42NzItOS4yOTctOS4zOTEtMTYuMDcyYy00Ljk0NS00LjM0Ni05LjEzOC03Ljg4NS0xNS43MDItMTcuMDAyICAgYy0zLjI0NS00LjUwOC02Ljk4Ny01LjA4OC0xMC45MDQtNS4wODhDMzkuOTk5LDM2Ljc4NSwzNS44NywzOC4xNjMsMzIuNjkzLDQyLjcyeiIgc3R5bGU9ImZpbGw6IHJnYigzNSwgMzUsIDIyMCk7Ij48L3BhdGg+DQo8L3N2Zz4NCg==")!important;background-size:auto 15px!important;background-position:center!important}#icibaResultTextBox{margin:0!important;padding:10px 10px 0 10px!important;color:#222!important;text-align:left!important;font-size:14px!important;font-family:Arial,Helvetica,sans-serif!important;background:#fbfbfb!important;max-height:250px!important;overflow-x:hidden!important;overflow-y:auto!important}#icibaResultTextBox::after{content:""!important;display:block!important;background:transparent!important;height:10px!important}.icIBahyI-new_word{display:none!important}.icIBahyI-label_list>LABEL{display:inline!important}#icibaResultTextBox div,#icibaResultTextBox ul,#icibaResultTextBox li,#icibaResultTextBox p,#icibaResultTextBox form,#icibaResultTextBox input,#icibaResultTextBox label{margin:0!important;padding:0!important;font-weight:normal!important}#icibaResultTextBox input,#icibaResultTextBox button,#icibaResultTextBox textarea{font-weight:inherit!important;font-style:inherit!important;font-size:inherit!important;font-family:Arial,Helvetica,sans-serif!important}#icibaResultTextBox ul,#icibaResultTextBox li{list-style:none!important}#icibaResultTextBox a:focus{outline:none!important}#icibaResultTextBox img{border:0!important}#icibaResultTextBox strong{font-weight:100!important;font-family:"Segoe UI",Verdana,Lucida Sans Regular,Lucida Sans Unicode,Arial,sans-serif!important}#icibaResultTextBox .icIBahyI-dictbar{font-size:12px!important}#icibaResultTextBox .icIBahyI-register,#icibaResultTextBox .icIBahyI-right_bg,#icibaResultTextBox .icIBahyI-up,#icibaResultTextBox .icIBahyI-down{float:right!important}#icibaResultTextBox .icIBahyI-register{padding-left:25px!important}#icibaResultTextBox a.icIBahyI-text_black,#icibaResultTextBox .icIBahyI-nav_list strong{color:#333!important}#icibaResultTextBox a{color:#236fd4!important;text-decoration:underline!important}#icibaResultTextBox a:hover{color:#236fd4!important}#icibaResultTextBox .icIBahyI-handwrite,#icibaResultTextBox .icIBahyI-handwrite_over,#icibaResultTextBox .icIBahyI-drop_down{position:absolute!important;width:16px!important;height:16px!important;cursor:pointer!important}#icibaResultTextBox .icIBahyI-handwrite{top:14px!important;right:130px!important;background-position:0 -70px!important}#icibaResultTextBox .icIBahyI-handwrite_over{top:14px!important;right:130px!important;background-position:-18px -70px!important}#icibaResultTextBox #icIBahyI-dict_main{padding:0!important;text-align:left!important}#icibaResultTextBox .icIBahyI-dictbar{display:block!important;padding:0!important;height:auto!important;line-height:1.2!important}#icibaResultTextBox .icIBahyI-title{position:relative!important;padding:16px 17px 0 18px!important;color:#333!important;font-weight:bold!important;font-size:24px!important;font-family:arial,sans-serif!important;line-height:32px!important;word-break:break-all!important}#icibaResultTextBox .icIBahyI-dict_title{color:#333!important;font-weight:bold!important;font-family:arial,sans-serif!important}#icibaResultTextBox .icIBahyI-prons{display:block!important;padding:0!important;height:auto!important;white-space:normal!important;font-weight:700!important}#icibaResultTextBox .icIBahyI-dictbar .icIBahyI-fl{vertical-align:middle!important;font-size:12px!important;line-height:normal!important}#icibaResultTextBox .icIBahyI-dictbar .icIBahyI-fl *{font-size:12px!important}#icibaResultTextBox .icIBahyI-ico_sound{text-decoration:none!important;border:none!important;display:inline-block!important;overflow:hidden!important;margin:0!important;width:16px!important;height:16px!important;background:url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjMyLjE1MyAyMzIuMTUzIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyMzIuMTUzIDIzMi4xNTM7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KCTxnIGlkPSJQbGF5Ij4KCQk8cGF0aAoJCQlzdHlsZT0iZmlsbC1ydWxlOiBldmVub2RkOyBjbGlwLXJ1bGU6IGV2ZW5vZGQ7IGZpbGw6IHJnYig4MCwgMTMwLCAyMjApOyIKCQkJZD0iTTIwMy43OTEsOTkuNjI4TDQ5LjMwNywyLjI5NGMtNC41NjctMi43MTktMTAuMjM4LTIuMjY2LTE0LjUyMS0yLjI2NiAgIGMtMTcuMTMyLDAtMTcuMDU2LDEzLjIyNy0xNy4wNTYsMTYuNTc4djE5OC45NGMwLDIuODMzLTAuMDc1LDE2LjU3OSwxNy4wNTYsMTYuNTc5YzQuMjgzLDAsOS45NTUsMC40NTEsMTQuNTIxLTIuMjY3ICAgbDE1NC40ODMtOTcuMzMzYzEyLjY4LTcuNTQ1LDEwLjQ4OS0xNi40NDksMTAuNDg5LTE2LjQ0OVMyMTYuNDcxLDEwNy4xNzIsMjAzLjc5MSw5OS42Mjh6Ij48L3BhdGg+Cgk8L2c+Cjwvc3ZnPgo=")!important;transition:0s!important;vertical-align:middle!important}#icibaResultTextBox .icIBahyI-ico_sound:hover{opacity:.7!important}#icibaResultTextBox .icIBahyI-ico_sound:active{opacity:.9!important}#icibaResultTextBox .icIBahyI-eg,#icibaResultTextBox .icIBahyI-us{padding-top:0!important;font-family:"lucida sans unicode",arial!important;display:block!important}#icibaResultTextBox .icIBahyI-new_word{float:left!important;padding-top:2px!important}#icibaResultTextBox .icIBahyI-new_word a{display:block!important;padding:3px 10px 0 20px!important;width:35px!important;height:17px!important;background-position:-274px 0!important;color:#999!important;font-weight:100!important;font-family:"Microsoft Yahei"!important}#icibaResultTextBox .icIBahyI-new_word a.icIBahyI-new_word2{background-position:-274px -19px!important}#icibaResultTextBox .icIBahyI-usually,#icibaResultTextBox .icIBahyI-prons{color:#666!important;font-weight:100!important}#icibaResultTextBox .icIBahyI-simple{margin:5px 0 5px 0!important}#icibaResultTextBox .icIBahyI-group_prons{clear:both!important;margin:0!important}#icibaResultTextBox .icIBahyI-group_prons .icIBahyI-second{float:none!important;padding-top:0!important}#icibaResultTextBox .icIBahyI-group_prons .icIBahyI-second .icIBahyI-eg{height:24px!important}#icibaResultTextBox .icIBahyI-group_pos{clear:both!important;overflow:hidden!important;color:#222!important;font-size:14px!important}#icibaResultTextBox .icIBahyI-group_pos *{font-size:14px!important}#icibaResultTextBox .icIBahyI-group_pos p:not(:last-of-type){margin-bottom:5px!important}#icibaResultTextBox .icIBahyI-label_list{float:left!important;padding-bottom:9px!important;width:87%!important;text-align:left!important}#icibaResultTextBox .icIBahyI-cn .icIBahyI-group_pos{color:#333!important}#icibaResultTextBox .icIBahyI-group_pos strong{color:#8d8d8d!important}#icibaResultTextBox .icIBahyI-margin_top{padding-top:6px!important}#icibaResultTextBox .icIBahyI-part_list a,#icibaResultTextBox .icIBahyI-tab_list li a,#icibaResultTextBox .icIBahyI-new_word a,#icibaResultTextBox .icIBahyI-part_main h3 a{text-decoration:none!important}#icibaResultTextBox .icIBahyI-tab_list{display:none!important}#icibaResultTextBox .icIBahyI-title{padding:13px 10px 1px!important;font-size:14px!important}#icibaResultTextBox .icIBahyI-group_pos{font-size:14px!important}#icibaResultTextBox .icIBahyI-group_pos .icIBahyI-fl{padding:0 6px 0 0!important;color:#999!important}#icibaResultTextBox .icIBahyI-group_pos span{vertical-align:baseline!important;line-height:normal!important;float:none!important;display:inline!important;padding:0!important}#icibaResultTextBox .icIBahyI-synon{color:#333!important;line-height:28px!important}#icibaResultTextBox .icIBahyI-suggest,#icibaResultTextBox .icIBahyI-suggest2{padding:0 0 3px 0!important;color:#333!important;word-wrap:break-word!important;font-size:14px!important;line-height:22px!important}#icibaResultTextBox .icIBahyI-suggest ul{padding:7px 0 4px!important;line-height:155%!important}#icibaResultTextBox .icIBahyI-suggest li{padding-left:14px!important;background-position:-134px -304px!important}#icibaResultTextBox .icIBahyI-suggest p{line-height:250%!important}#icibaResultTextBox .icIBahyI-suggest .icIBahyI-pr a{padding-right:3px!important}#icibaResultTextBox .icIBahyI-suggest p.icIBahyI-pr{margin-top:3px!important;line-height:18px!important}#icibaResultTextBox .icIBahyI-suggest .icIBahyI-pr a{display:inline-block!important;padding-right:10px!important}#icibaResultTextBox .icIBahyI-footer{padding:0!important;width:auto!important;color:#999!important;text-align:right!important;font-size:12px!important;line-height:18px!important}#icibaResultTextBox .icIBahyI-footer a{border:none!important;text-decoration:none!important;padding:0 3px 0 0!important;background:none!important;color:#236fd4!important;text-decoration:none!important;font-size:12px!important;line-height:18px!important}#icibaResultTextBox .icIBahyI-footer a:hover{color:#236fd4!important}#icibaResultTextBox .icIBahyI-text_blue{color:#236fd4!important}#icibaResultTextBox .icIBahyI-list li{padding:0 15px!important}#icibaResultTextBox .icIBahyI-li_dt,.icIBahyI-li_dd{display:inline!important;line-height:24px!important}#icibaResultTextBox .icIBahyI-li_dt{padding-right:5px!important;color:#232323!important}#icibaResultTextBox .icIBahyI-li_dd{color:#777!important}#ICIBA_TOO_LONG{padding-top:10px!important;padding-left:10px!important;font-size:12px!important}</style><style type="text/css">
+:root .bm.a_c,
+:root .wp.a_f,
+:root .wp.a_h,
+:root .wp.a_t
+{ display: none !important; }</style></head>
+
+<body id="nv_portal" class="pg_view" onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+        <div class="animate-layer">
+        	<s class="a-bird a-bird-01"></s>
+            <s class="a-bird a-bird-02"></s>
+            <s class="a-bird a-bird-03"></s>
+            <s class="a-bird a-bird-04"></s>
+            <s class="a-bird a-bird-05"></s>
+            <s class="a-bird a-bird-06"></s>
+        	<s class="a-cloud a-cloud-01"></s>
+            <s class="a-cloud a-cloud-02"></s>
+            <s class="a-cloud a-cloud-03"></s>
+            <s class="a-cloud a-cloud-04"></s>
+            <s class="a-cloud a-cloud-05"></s>
+            <s class="a-cloud a-cloud-06"></s>
+            <s class="a-balloon a-balloon-01"></s>
+            <s class="a-balloon a-balloon-02"></s>
+            <s class="a-meteor a-meteor-01"></s>
+            <s class="a-meteor a-meteor-02"></s>
+            <s class="a-meteor a-meteor-03"></s>
+            <s class="a-meteor a-meteor-04"></s>
+            <s class="a-star a-star-01"></s>
+            <s class="a-star a-star-02"></s>
+            <s class="a-star a-star-03"></s>
+            <s class="a-star a-star-04"></s>
+            <s class="a-star a-star-05"></s>
+</div>
+                <div id="change_theme_btn_menu" class="q_qiehuan_menu">
+        	<h2>
+<a class="dialog-handle" href="javascript:void(0)" onclick="qout()"></a>
+</h2>
+            <div style="padding:15px 0 0 0;">
+<span onmouseout="this.className=&#39;cl&#39;" onmouseover="this.className=&#39;cl q_sslct_btn&#39;" onclick="extstyle(&#39;&#39;)"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/t0-bg.jpg"><em>默认</em></span></div>
+</div>
+<script>
+jQuery(function(){
+jQuery('#change_theme_btn').click(function(){
+if(!jQuery('#change_theme_btn_menu').is(':visible')){
+jQuery('#change_theme_btn_menu').css({display:'block', top:'-100px'}).animate({top: '+100'}, 500);
+}
+});
+});
+  function qout(){
+  jQuery('#change_theme_btn_menu').animate({top:'0'}, 500, function(){
+  jQuery(this).css({display:'none', top:'-100px'});
+});
+}
+</script>
+<div id="toptb" class="cl q_none">
+<div class="wp">
+<div class="z"></div>
+<div class="y">
+<a id="switchblind" href="javascript:;" onclick="toggleBlind(this)" title="开启辅助访问" class="switchblind">开启辅助访问</a>
+</div>
+</div>
+</div>
+        <div class="qing_changestyle"></div>
+
+<div id="qmenu_menu" class="animate p_pop blk" style="display: none;">
+<div class="ptm pbw hm">
+<a href="http://www.52im.net/member.php?mod=logging&amp;action=login&amp;referer=" onclick="showWindow(&#39;login&#39;, this.href);return false;">登录</a><span class="pipe">|</span>
+<a href="http://www.52im.net/member.php?mod=register">立即注册</a>
+</div>
+</div><div id="hd">
+<div class="wp" style="margin:0 auto; padding:0;">
+
+<div id="cngeeker_nv_logo">
+<a class="cngeeker_nv_logo_i" href="http://www.52im.net/">
+
+                    </a>
+</div>
+
+<div class="hdc cl"><script type="text/javascript">
+jQuery(function()
+{
+jQuery('#hov_btn').hover(function() 
+{
+jQuery('div.qing_lg_after ul').show();
+},function() 
+{
+jQuery('div.qing_lg_after ul').hide();
+});
+});
+
+</script>
+<script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/logging.js.下载" type="text/javascript"></script>
+<div class="qing_login">
+
+<a href="http://www.52im.net/plug-wechat-login.html"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/wechat_login_simple.png" class="vm"></a>
+<a style="margin-left: 0px" href="http://www.52im.net/connect.php?mod=login&amp;op=init&amp;referer=http%3A%2F%2Fwww.52im.net%2F&amp;statfrom=login" target="_top" rel="nofollow"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/qq_login_simple.gif" class="vm"></a>
+<span class="pipe" style="margin: 0 5px 0 10px;border-right: 1px solid #CDCDCD;line-height: 24px;height: 24px;"></span>
+
+    	<a class="qing_lg" href="http://www.52im.net/member.php?mod=logging&amp;action=login&amp;referer=" onclick="showWindow(&#39;login&#39;, this.href);return false;">登录</a>
+<a class="qing_reg" href="http://www.52im.net/member.php?mod=register">立即注册</a>
+    </div>
+</div>
+
+<div id="qing_nv">
+<a style="display:none;" href="javascript:;" id="qmenu" class="animate" onmouseover="showMenu({&#39;ctrlid&#39;:&#39;qmenu&#39;,&#39;pos&#39;:&#39;34!&#39;,&#39;ctrlclass&#39;:&#39;a&#39;,&#39;duration&#39;:2})">快捷导航</a>
+<ul><li id="mn_Ne375"><a href="http://www.52im.net/topic-tcpipvol1.html" hidefocus="true">TCP/IP详解</a>
+ <span>独家</span></li>
+<li id="mn_forum"><a href="http://www.52im.net/forum.php?mod=collection&amp;op=all" hidefocus="true" title="精选帖子、资料的合辑。">技术精选<span>精选帖子、资料的合辑。</span></a>
+</li>
+<li id="mn_home"><a href="http://www.52im.net/home.php" hidefocus="true" title="Space">动态<span>Space</span></a>
+</li>
+<li id="mn_forum_2"><a href="http://www.52im.net/forum.php" hidefocus="true" title="精品技术讨论和交流专区。">社区<span>精品技术讨论和交流专区。</span></a>
+</li>
+<li id="mn_P11"><a href="http://www.52im.net/pi/" hidefocus="true" title="即时通讯相关的最新资讯。">资讯<span>即时通讯相关的最新资讯。</span></a>
+</li>
+<li class="a" id="mn_portal"><a href="http://www.52im.net/" hidefocus="true" title="即时通讯网门户首页。">首页<span>即时通讯网门户首页。</span></a>
+</li>
+</ul>
+</div>
+<ul class="p_pop h_pop" id="plugin_menu" style="display: none">  <li><a href="http://www.52im.net/plug-dsu_paulsign-sign.html" id="mn_plink_sign">每日签到</a></li>
+ </ul>
+<div class="p_pop h_pop" id="mn_userapp_menu" style="display: none"></div><div id="mu" class="cl">
+</div>
+</div>
+</div>
+
+
+<div id="wp" class="wp cl">
+<div class="qing_subnav">
+                	<div class="sub_l q_fl">
+                    	<a class="qing_logo" href="http://www.52im.net/">
+                                                    <img width="20" height="20" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/cngeeker_minilogo.png" alt="">
+                                                    <em>首页</em>
+                        </a>
+                        <div id="qing_pt" class="subnr z cl">
+                                                		<a href="http://www.52im.net/" class="nvhm" title="首页">即时通讯网</a> <em></em><a href="http://www.52im.net/pbbs2/">社区精选</a> <em></em><font color="#999">NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等</font>                        </div>
+                        <div class="z" style="margin-left:20px; line-height:45px;"></div>
+                    </div>
+                <div id="scbar" class="q_fr cl">
+<form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($(&#39;scbar_txt&#39;))" action="http://www.52im.net/search.php?searchsubmit=yes" target="_blank">
+<input type="hidden" name="mod" id="scbar_mod" value="forum">
+<input type="hidden" name="formhash" value="79e54b2c">
+<input type="hidden" name="srchtype" value="title">
+<input type="hidden" name="srhfid" value="0">
+<input type="hidden" name="srhlocality" value="portal::view">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="scbar_type_td"><a href="javascript:;" id="scbar_type" style="color:#666666;" onclick="showMenu(this.id)" hidefocus="true">帖子</a></td>
+<td class="scbar_txt_td"><input type="text" name="srchtxt" id="scbar_txt" value="请输入搜索内容" autocomplete="off" x-webkit-speech="" speech="" class=" xg1" placeholder="请输入搜索内容"></td>
+<td class="scbar_btn_td"><button type="submit" name="searchsubmit" id="scbar_btn" sc="1" class="pn pnc" value="true"></button></td>
+</tr>
+</tbody></table>
+</form>
+</div>
+<ul id="scbar_type_menu" class="p_pop" style="display: none;"><li><a href="javascript:;" rel="article">文章</a></li><li><a href="javascript:;" rel="forum" class="curtype">帖子</a></li><li><a href="javascript:;" rel="group">群组</a></li><li><a href="javascript:;" rel="user">用户</a></li></ul>
+<script type="text/javascript">
+initSearchmenu('scbar', '');
+</script>
+                </div>
+                    
+<!--[name]Qing_115style[/name]-->
+
+<script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/forum_viewthread.js.下载" type="text/javascript"></script>
+<script type="text/javascript">zoomstatus = parseInt(0), imagemaxwidth = '797', aimgcount = new Array();</script>
+<div id="pt" class="bm cl">
+<div class="z">
+<a href="http://www.52im.net/" class="nvhm" title="首页">即时通讯网</a> <em>&#8250;</em>
+<a href="http://www.52im.net/portal.php">首页</a> <em>&#8250;</em><a href="http://www.52im.net/pbbs2/">社区精选</a> <em>&#8250;</em>
+查看内容
+</div>
+</div>
+
+<style id="diy_style" type="text/css"></style>
+<style>
+.bm {background:none !important;}
+.ask-list-more {margin-left: 15px;font-size: 12px;font-family: Arial,Helvetica,sans-serif;color: #0078b6;font-weight:normal;}
+</style>
+<div class="wp cl">
+<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+</div>
+
+<div id="ct" class="ct2 wp cl">
+<div class="mn">
+
+<div class="g_fv_hot_hint">
+<span class="g_fv_hot_hint_icon">推荐</span>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;op=all">即时通讯资料太杂？看技术专辑吧!</a>
+<span class="pipe">/</span>
+<a href="http://www.52im.net/forum.php">需要帮助？去社区发贴吧!</a>
+<span class="pipe">/</span>
+<a href="http://www.52im.net/topic-qqgroup.html">技术交流群：<b>320837163</b></a>
+</div>
+
+<div class="bm vw">
+<div class="h">
+<h1 class="ph">NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 </h1>
+<p class="xg1 js-ptl-p">
+<a href="http://www.52im.net/space-uid-193.html">独孤小编</a> · <span title="2015-08-20 15:46">2&nbsp;年前</span> <span class="pipe">|</span>
+阅读（<em id="_viewnum">13418</em>）· 
+评论（<a href="http://www.52im.net/thread-50-1-1.html" title="查看全部评论"><em id="_commentnum">6</em></a>）<span class="pipe">|</span> 来自 JackJiang<span class="pipe">|</span> 来源 <a href="http://www.52im.net/thread-50-1-1.html" target="_blank">52IM社区</a><a href="http://www.52im.net/misc.php?mod=invite&amp;action=article&amp;id=64" id="a_invite" onclick="showWindow(&#39;invite&#39;, this.href, &#39;get&#39;, 0);" class="oshr2" style="background:none !important;"><i class="icon-external-link"></i> 转发</a>
+<a href="http://www.52im.net/home.php?mod=spacecp&amp;ac=favorite&amp;type=article&amp;id=64&amp;handlekey=favoritearticlehk_64" id="a_favorite" onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" class="oshr2" style="background:none !important;"><i class="icon-star fav"></i> 收藏<span id="favoritenumber" style="display:none"><b>0</b></span></a>
+</p>
+</div>
+
+<!--[diy=diysummarytop]--><div id="diysummarytop" class="area"></div><!--[/diy]-->
+
+<div class="js-ptl-atcl-summery">
+<span class="t">摘要</span>
+<span class="c">这是一篇介绍NAT技术要点的精华文章，来自华3通信官方资料库，文中对NAT技术原理的介绍很全面也很权威，对网络应用的应用层开发人员而言有很高的参考价值。</span>
+</div>
+
+<!--[diy=diysummarybottom]--><div id="diysummarybottom" class="area"></div><!--[/diy]-->
+
+<div class="d">
+
+<!--[diy=diycontenttop]--><div id="diycontenttop" class="area"></div><!--[/diy]-->
+
+<table cellpadding="0" cellspacing="0" class="vwtb">
+<tbody><tr>
+<td id="article_content"><p style="padding: 2px 15px ;margin-top: 16px;margin-bottom: 0px;color: #777;border-left: 4px solid #ddd;">这是一篇介绍NAT技术要点的精华文章，来自华3通信官方资料库，文中对NAT技术原理的介绍很全面也很权威，对网络应用的应用层开发人员而言有很高的参考价值。</p><h1 style="padding-bottom: 10px; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); margin-top: 25px; margin-bottom: 20px; font-size: 2.0em;">1. IPv4协议和NAT的由来</h1>
+今天，无数快乐的互联网用户在尽情享受Internet带来的乐趣。他们浏览新闻，搜索资料，下载软件，广交新朋，分享信息，甚至于足不出户获取一切日用所需。企业利用互联网发布信息，传递资料和订单，提供技术支持，完成日常办公。然而，Internet在给亿万用户带来便利的同时，自身却面临一个致命的问题：构建这个无所不能的Internet的基础IPv4协议已经不能再提供新的网络地址了。<br>
+<br>
+2011年2月3日中国农历新年， IANA对外宣布：IPv4地址空间最后5个地址块已经被分配给下属的5个地区委员会。2011年4月15日，亚太区委员会APNIC对外宣布，除了个别保留地址外，本区域所有的IPv4地址基本耗尽。一时之间，IPv4地址作为一种濒危资源身价陡增，各大网络公司出巨资收购剩余的空闲地址。其实，IPv4地址不足问题已不是新问题，早在20年以前，IPv4地址即将耗尽的问题就已经摆在Internet先驱们面前。这不禁让我们想去了解，是什么技术使这一危机延缓了尽20年。<br>
+<br>
+要找到问题的答案，让我们先来简略回顾一下IPv4协议。<br>
+<br>
+IPv4即网际网协议第4版——Internet Protocol Version 4的缩写。IPv4定义一个跨越异种网络互连的超级网，它为每个网际网的节点分配全球唯一IP地址。如果我们把Internet比作一个邮政系统，那么IP地址的作用就等同于包含城市、街区、门牌编号在内的完整地址。IPv4使用32bits整数表达一个地址，地址最大范围就是232 约为43亿。以IP创始时期可被联网的设备来看，这样的一个空间已经很大，很难被短时间用完。然而，事实远远超出人们的设想，计算机网络在此后的几十年里迅速壮大，网络终端数量呈爆炸性增长。<br>
+<br>
+更为糟糕的是，为了路由和管理方便，43亿的地址空间被按照不同前缀长度划分为A,B,C,D类地址网络和保留地址。其中，A类网络地址127段，每段包括主机地址约1678万个。B类网络地址16384段，每段包括65536个主机地址。<br>
+<br>
+<img id="_aimg_184" aid="184" zoomfile="data/attachment/forum/201509/06/200926crr724j68tledk1p.png" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/200926crr724j68tledk1p.png" class="zoom" onclick="zoom(this, this.src, 0, 0, 0)" width="492" alt="图1 IPv4网络地址划分" title="图1 IPv4网络地址划分" w="492"><br>
+<font face="楷体,楷体_GB2312"><font color="#808080">图1 IPv4网络地址划分</font></font><br>
+<br>
+IANA向超大型企业/组织分配A类网络地址，一次一段。向中型企业或教育机构分配B类网络地址，一次一段。这样一种分配策略使得IP地址浪费很严重，很多被分配出去的地址没有真实被利用，地址消耗很快。以至于二十世纪90年代初，网络专家们意识到，这样大手大脚下去，IPv4地址很快就要耗光了。于是，人们开始考虑IPv4的替代方案，同时采取一系列的措施来减缓IPv4地址的消耗。正是在这样一个背景之下，本期的主角闪亮登场，它就是网络地址转换——NAT。<br>
+<br>
+NAT是一项神奇的技术，说它神奇在于它的出现几乎使IPv4起死回生。在IPv4已经被认为行将结束历史使命之后近20年时间里，人们几乎忘了IPv4的地址空间即将耗尽这样一个事实——在新技术日新月异的时代，20年可算一段漫长的历史。更不用说，在NAT产生以后，网络终端的数量呈加速上升趋势，对IP地址的需求剧烈增加。此足见NAT技术之成功，影响之深远。<br>
+<br>
+说它神奇，更因为NAT给IP网络模型带来了深远影响，其身影遍布网络每个角落。根据一份最近的研究报告，70%的P2P用户位于NAT网关以内。因为P2P主要运行在终端用户的个人电脑之上，这个数字意味着大多数PC通过NAT网关连接到Internet。如果加上2G和3G方式联网的智能手机等移动终端，在NAT网关之后的用户远远超过这个比例。<br>
+<br>
+然而当我们求本溯源时却发现一个很奇怪的事实：NAT这一意义重大的技术，竟然没有公认的发明者。NAT第一个版本的RFC作者，只是整理归纳了已被广泛采用的技术。<br><h1 style="padding-bottom: 10px; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); margin-top: 25px; margin-bottom: 20px;font-size: 2.0em;">2. NAT的工作模型和特点</h1><h2 style="font-size: 1.4em;margin: 15px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">2.1 NAT的概念模型</h2>
+NAT名字很准确，网络地址转换，就是替换IP报文头部的地址信息。NAT通常部署在一个组织的网络出口位置，通过将内部网络IP地址替换为出口的IP地址提供公网可达性和上层协议的连接能力。那么，什么是内部网络IP地址？<br>
+<br>
+RFC1918规定了三个保留地址段落：10.0.0.0-10.255.255.255；172.16.0.0-172.31.255.255；192.168.0.0-192.168.255.255。这三个范围分别处于A,B,C类的地址段，不向特定的用户分配，被IANA作为私有地址保留。这些地址可以在任何组织或企业内部使用，和其他Internet地址的区别就是，仅能在内部使用，不能作为全球路由地址。这就是说，出了组织的管理范围这些地址就不再有意义，无论是作为源地址，还是目的地址。对于一个封闭的组织，如果其网络不连接到Internet，就可以使用这些地址而不用向IANA提出申请，而在内部的路由管理和报文传递方式与其他网络没有差异。<br>
+<br>
+对于有Internet访问需求而内部又使用私有地址的网络，就要在组织的出口位置部署NAT网关，在报文离开私网进入Internet时，将源IP替换为公网地址，通常是出口设备的接口地址。一个对外的访问请求在到达目标以后，表现为由本组织出口设备发起，因此被请求的服务端可将响应由Internet发回出口网关。出口网关再将目的地址替换为私网的源主机地址，发回内部。这样一次由私网主机向公网服务端的请求和响应就在通信两端均无感知的情况下完成了。依据这种模型，数量庞大的内网主机就不再需要公有IP地址了。<br>
+<br>
+<img id="_aimg_185" aid="185" zoomfile="data/attachment/forum/201509/06/202518pip8a6h99c8xc6i6.png" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/202518pip8a6h99c8xc6i6.png" class="zoom" onclick="zoom(this, this.src, 0, 0, 0)" width="444" alt="图2 NAT转换过程示意图" title="图2 NAT转换过程示意图" w="444"><br>
+<font face="楷体, 楷体_GB2312"><font color="#808080">图2 NAT转换过程示意图</font></font><br>
+<br>
+<strong>虽然实际过程远比这个复杂，但上面的描述概括了NAT处理报文的几个关键特点：</strong><br><p style="padding: 2px 15px ;margin-top: 16px;margin-bottom: 0px;color: #777;border-left: 4px solid #ddd;">1. 网络被分为私网和公网两个部分，NAT网关设置在私网到公网的路由出口位置，双向流量必须都要经过NAT网关； 2. 网络访问只能先由私网侧发起，公网无法主动访问私网主机；  3. NAT网关在两个访问方向上完成两次地址的转换或翻译，出方向做源信息替换，入方向做目的信息替换；  4. NAT网关的存在对通信双方是保持透明的；  5. NAT网关为了实现双向翻译的功能，需要维护一张关联表，把会话的信息保存下来。</p>
+随着后面对NAT的深入描述，读者会发现，这些特点是鲜明的，但又不是绝对的。其中第二个特点打破了IP协议架构中所有节点在通讯中的对等地位，这是NAT最大的弊端，为对等通讯带来了诸多问题，当然相应的克服手段也应运而生。事实上，第四点是NAT致力于达到的目标，但在很多情况下，NAT并没有做到，因为除了IP首部，上层通信协议经常在内部携带IP地址信息。这些我们稍后解释。<br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">2.2 一对一的NAT</h2>
+如果一个内部主机唯一占用一个公网IP，这种方式被称为一对一模型。此种方式下，转换上层协议就是不必要的，因为一个公网IP就能唯一对应一个内部主机。显然，这种方式对节约公网IP没有太大意义，主要是为了实现一些特殊的组网需求。比如用户希望隐藏内部主机的真实IP，或者实现两个IP地址重叠网络的通信。<br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">2.3 一对多的NAT</h2>
+NAT最典型的应用场景就如同图2描述的，一个组织网络，在出口位置部署NAT网关，所有对公网的访问表现为一台主机。这就是所谓的一对多模型。这种方式下，出口设备只占用一个由Internet服务提供商分配的公网IP地址。面对私网内部数量庞大的主机，如果NAT只进行IP地址的简单替换，就会产生一个问题：当有多个内部主机去访问同一个服务器时，从返回的信息不足以区分响应应该转发到哪个内部主机。此时，需要NAT设备根据传输层信息或其他上层协议去区分不同的会话，并且可能要对上层协议的标识进行转换，比如TCP或UDP端口号。这样NAT网关就可以将不同的内部连接访问映射到同一公网IP的不同传输层端口，通过这种方式实现公网IP的复用和解复用。这种方式也被称为端口转换PAT、NAPT或IP伪装，但更多时候直接被称为NAT，因为它是最典型的一种应用模式。<br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">2.4 按照NAT端口映射方式分类</h2>
+在一对多模型中，按照端口转换的工作方式不同，又可以进行更进一步的划分。为描述方便，以下将IP和端口标记为(nAddr:nPort)，其中n代表主机或NAT网关的不同角色。<br>
+<br>
+<img id="_aimg_186" aid="186" zoomfile="data/attachment/forum/201509/06/202751b5p2nmsj6nu5sujj.png" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/202751b5p2nmsj6nu5sujj.png" class="zoom" onclick="zoom(this, this.src, 0, 0, 0)" width="480" alt=" 图3 按照端口转换映射方式分类" title=" 图3 按照端口转换映射方式分类" w="480"><br>
+<font face="楷体, 楷体_GB2312"><font color="#808080"> 图3 按照端口转换映射方式分类</font></font><br>
+<br>
+<strong>&nbsp; &nbsp; 全锥形NAT</strong><br>
+其特点为：一旦内部主机端口对(iAddr:iPort)被NAT网关映射到(eAddr:ePort)，所有后续的(iAddr:iPort)报文都会被转换为(eAddr:ePort)；任何一个外部主机发送到(eAddr:ePort)的报文将会被转换后发到(iAddr:iPort)。<br>
+<br>
+<strong>&nbsp; &nbsp; 限制锥形NAT</strong><br>
+其特点为：一旦内部主机端口对(iAddr:iPort)被映射到(eAddr:ePort)，所有后续的(iAddr:iPort)报文都会被转换为(eAddr:ePort)；只有 (iAddr:iPort)向特定的外部主机hAddr发送过数据，主机hAddr从任意端口发送到(eAddr:ePort)的报文将会被转发到(iAddr:iPort)。<br>
+<br>
+<strong>&nbsp; &nbsp; 端口限制锥形NAT</strong><br>
+其特点为：一旦内部主机端口对(iAddr:iPort)被映射到(eAddr:ePort)，所有后续的(iAddr:iPort)报文都会被转换为(eAddr:ePort)；只有(iAddr:iPort)向特定的外部主机端口对(hAddr:hPort)发送过数据，由 (hAddr:hPort)发送到(eAddr:ePort)的报文将会被转发到(iAddr:iPort)。<br>
+<br>
+<strong>&nbsp; &nbsp; 对称型NAT</strong><br>
+其特点为：NAT网关会把内部主机“地址端口对”和外部主机“地址端口对”完全相同的报文看作一个连接，在网关上创建一个公网“地址端口对”映射进行转换，只有收到报文的外部主机从对应的端口对发送回应的报文，才能被转换。即使内部主机使用之前用过的地址端口对去连接不同外部主机(或端口)时，NAT网关也会建立新的映射关系。<br>
+<br>
+事实上，这些术语的引入是很多混淆的起源。现实中的很多NAT设备是将这些转换方式混合在一起工作的，而不单单使用一种，所以这些术语只适合描述一种工作方式，而不是一个设备。比如，很多NAT设备对内部发出的连接使用对称型NAT方式，而同时支持静态的端口映射，后者可以被看作是全锥型NAT方式。而有些情况下，NAT设备的一个公网地址和端口可以同时映射到内部几个服务器上以实现负载分担，比如一个对外提供WEB服务器的站点可能是有成百上千个服务器在提供HTTP服务，但是对外却表现为一个或少数几个IP地址。<br><h1 style="padding-bottom: 10px; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); margin-top: 25px; margin-bottom: 20px;font-size: 2.0em;">3. NAT的限制与解决方案</h1><h2 style="font-size: 1.4em;margin: 15px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">3.1 IP端到端服务模型</h2>
+IP协议的一个重要贡献是把世界变得平等。在理论上，具有IP地址的每个站点在协议层面有相当的获取服务和提供服务的能力，不同的IP地址之间没有差异。人们熟知的服务器和客户机实际是在应用协议层上的角色区分，而在网络层和传输层没有差异。一个具有IP地址的主机既可以是客户机，也可以是服务器，大部分情况下，既是客户机，也是服务器。端到端对等看起来是很平常的事情，而意义并不寻常。但在以往的技术中，很多协议体系下的网络限定了终端的能力。正是IP的这个开放性，使得TCP/IP协议族可以提供丰富的功能，为应用实现提供了广阔平台。因为所有的IP主机都可以服务器的形式出现，所以通讯设计可以更加灵活。使用UNIX/LINUX的系统充分利用了这个特性，使得任何一个主机都可以建立自己的HTTP、SMTP、POP3、DNS、DHCP等服务。与此同时，很多应用也是把客户端和服务器的角色组合起来完成功能。例如在VoIP应用中，用户端向注册服务器登录自己的IP地址和端口信息过程中，主机是客户端；而在呼叫到达时，呼叫处理服务器向用户端发送呼叫请求时，用户端实际工作在服务器模式下。在语音媒体流信道建立过程后，通讯双向发送语音数据，发送端是客户模式，接收端是服务器模式。而在P2P的应用中，一个用户的主机既为下载的客户，同时也向其他客户提供数据，是一种C/S混合的模型。上层应用之所以能这样设计，是因为IP协议栈定义了这样的能力。试想一下，如果IP提供的能力不对等，那么每个通信会话都只能是单方向发起的，这会极大限制通信的能力。细心的读者会发现，前面介绍NAT的一个特性正是这样一种限制。没错，NAT最大的弊端正在于此——破坏了IP端到端通信的能力。<br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">3.2 NAT的弊端</h2>
+NAT在解决IPv4地址短缺问题上，并非没有副作用，其实存在很多问题。<br>
+<br>
+首先，NAT使IP会话的保持时效变短。因为一个会话建立后会在NAT设备上建立一个关联表，在会话静默的这段时间，NAT网关会进行老化操作。这是任何一个NAT网关必须做的事情，因为IP和端口资源有限，通信的需求无限，所以必须在会话结束后回收资源。通常TCP会话通过协商的方式主动关闭连接，NAT网关可以跟踪这些报文，但总是存在例外的情况，要依赖自己的定时器去回收资源。而基于UDP的通信协议很难确定何时通信结束，所以NAT网关主要依赖超时机制回收外部端口。通过定时器老化回收会带来一个问题，如果应用需要维持连接的时间大于NAT网关的设置，通信就会意外中断。因为网关回收相关转换表资源以后，新的数据到达时就找不到相关的转换信息，必须建立新的连接。当这个新数据是由公网侧向私网侧发送时，就会发生无法触发新连接建立，也不能通知到私网侧的主机去重建连接的情况。这时候通信就会中断，不能自动恢复。即使新数据是从私网侧发向公网侧，因为重建的会话表往往使用不同于之前的公网IP和端口地址，公网侧主机也无法对应到之前的通信上，导致用户可感知的连接中断。NAT网关要把回收空闲连接的时间设置到不发生持续的资源流失，又维持大部分连接不被意外中断，是一件比较有难度的事情。在NAT已经普及化的时代，很多应用协议的设计者已经考虑到了这种情况，所以一般会设置一个连接保活的机制，即在一段时间没有数据需要发送时，主动发送一个NAT能感知到而又没有实际数据的保活消息，这么做的主要目的就是重置NAT的会话定时器。<br>
+ <br>
+其次，NAT在实现上将多个内部主机发出的连接复用到一个IP上，这就使依赖IP进行主机跟踪的机制都失效了。如网络管理中需要的基于网络流量分析的应用无法跟踪到终端用户与流量的具体行为的关系。基于用户行为的日志分析也变得困难，因为一个IP被很多用户共享，如果存在恶意的用户行为，很难定位到发起连接的那个主机。即便有一些机制提供了在NAT网关上进行连接跟踪的方法，但是把这种变换关系接续起来也困难重重。基于IP的用户授权不再可靠，因为拥有一个IP的不等于一个用户或主机。一个服务器也不能简单把同一IP的访问视作同一主机发起的，不能进行关联。有些服务器设置有连接限制，同一时刻只接纳来自一个IP的有限访问(有时是仅一个访问)，这会造成不同用户之间的服务抢占和排队。有时服务器端这样做是出于DOS攻击防护的考虑，因为一个用户正常情况下不应该建立大量的连接请求，过度使用服务资源被理解为攻击行为。但是这在NAT存在时不能简单按照连接数判断。总之，因为NAT隐蔽了通信的一端，把简单的事情复杂化了。<br>
+<br>
+我们来深入理解NAT一下对IP端到端模型的破坏力。NAT通过修改IP首部的信息变换通信的地址。但是在这个转换过程中只能基于一个会话单位。当一个应用需要保持多个双向连接时，麻烦就很大。NAT不能理解多个会话之间的关联性，无法保证转换符合应用需要的规则。当NAT网关拥有多个公有IP地址时，一组关联会话可能被分配到不同的公网地址，这通常是服务器端无法接受的。更为严重的是，当公网侧的主机要主动向私网侧发送数据时，NAT网关没有转换这个连接需要的关联表，这个数据包无法到达私网侧的主机。这些反方向发送数据的连接总有应用协议的约定或在初始建立的会话中进行过协商。但是因为NAT工作在网络层和传输层，无法理解应用层协议的行为，对这些信息是无知的。NAT希望自己对通信双方是透明的，但是在这些情况下这是一种奢望。<br>
+<br>
+<img id="_aimg_187" aid="187" zoomfile="data/attachment/forum/201509/06/203015ak3kk90kyh4c8484.png" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/203015ak3kk90kyh4c8484.png" class="zoom" onclick="zoom(this, this.src, 0, 0, 0)" width="499" alt="图4 NAT对端到端通信模型的破坏" title="图4 NAT对端到端通信模型的破坏" w="499"><br>
+<font face="楷体, 楷体_GB2312"><font color="#808080">图4 NAT对端到端通信模型的破坏</font></font><br>
+<br>
+此外，NAT工作机制依赖于修改IP包头的信息，这会妨碍一些安全协议的工作。因为NAT篡改了IP地址、传输层端口号和校验和，这会导致认证协议彻底不能工作，因为认证目的就是要保证这些信息在传输过程中没有变化。对于一些隧道协议，NAT的存在也导致了额外的问题，因为隧道协议通常用外层地址标识隧道实体，穿过NAT的隧道会有IP复用关系，在另一端需要小心处理。ICMP是一种网络控制协议，它的工作原理也是在两个主机之间传递差错和控制消息，因为IP的对应关系被重新映射，ICMP也要进行复用和解复用处理，很多情况下因为ICMP报文载荷无法提供足够的信息，解复用会失败。IP分片机制是在信息源端或网络路径上，需要发送的IP报文尺寸大于路径实际能承载最大尺寸时，IP协议层会将一个报文分成多个片断发送，然后在接收端重组这些片断恢复原始报文。IP这样的分片机制会导致传输层的信息只包括在第一个分片中，NAT难以识别后续分片与关联表的对应关系，因此需要特殊处理。<br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">3.3 NAT穿越技术</h2>
+前面解释了NAT的弊端，为了解决IP端到端应用在NAT环境下遇到的问题，网络协议的设计者们创造了各种武器来进行应对。但遗憾的是，这里每一种方法都不完美，还需要在内部主机、应用程序或者NAT网关上增加额外的处理。<br>
+<br>
+<strong>&nbsp; &nbsp; 应用层网关</strong><br>
+应用层网关(ALG)是解决NAT对应用层协议无感知的一个最常用方法，已经被NAT设备厂商广泛采用，成为NAT设备的一个必需功能。因为NAT不感知应用协议，所以有必要额外为每个应用协议定制协议分析功能，这样NAT网关就能理解并支持特定的协议。ALG与NAT形成互动关系，在一个NAT网关检测到新的连接请求时，需要判断是否为已知的应用类型，这通常是基于连接的传输层端口信息来识别的。在识别为已知应用时，再调用相应功能对报文的深层内容进行检查，当发现任何形式表达的IP地址和端口时，将会把这些信息同步转换，并且为这个新连接创建一个附加的转换表项。这样，当报文到达公网侧的目的主机时，应用层协议中携带的信息就是NAT网关提供的地址和端口。一旦公网侧主机开始发送数据或建立连接到此端口，NAT网关就可以根据关联表信息进行转换，再把数据转发到私网侧的主机。很多应用层协议实现不限于一个初始连接(通常为信令或控制通道)加一个数据连接，可能是一个初始连接对应很多后续的新连接。比较特别的协议，在一次协商中会产生一组相关连接，比如RTP/RTCP协议规定，一个RTP通道建立后占用连续的两个端口，一个服务于数据，另一个服务于控制消息。此时，就需要ALG分配连续的端口为应用服务。ALG能成功解决大部分协议的NAT穿越需求，但是这个方法也有很大的限制。因为应用协议的数量非常多而且在不断发展变化之中，添加到设备中的ALG功能都是为特定协议的特定规范版本而开发的，协议的创新和演进要求NAT设备制造商必须跟踪这些协议的最近标准，同时兼容旧标准。尽管有如Linux这种开放平台允许动态加载新的ALG特性，但是管理成本仍然很高，网络维护人员也不能随时了解用户都需要什么应用。因此为每个应用协议开发ALG代码并跟踪最新标准是不可行的，ALG只能解决用户最常用的需求。此外，出于安全性需要，有些应用类型报文从源端发出就已经加密，这种报文在网络中间无法进行分析，所以ALG无能为力。<br>
+<br>
+<strong>&nbsp; &nbsp; 探针技术STUN和TURN</strong><br>
+所谓探针技术，是通过在所有参与通信的实体上安装探测插件，以检测网络中是否存在NAT网关，并对不同NAT模型实施不同穿越方法的一种技术。STUN服务器被部署在公网上，用于接收来自通信实体的探测请求，服务器会记录收到请求的报文地址和端口，并填写到回送的响应报文中。客户端根据接收到的响应消息中记录的地址和端口与本地选择的地址和端口进行比较，就能识别出是否存在NAT网关。如果存在NAT网关，客户端会使用之前的地址和端口向服务器的另外一个IP发起请求，重复前面的探测。然后再比较两次响应返回的结果判断出NAT工作的模式。由前述的一对多转换模型得知，除对称型NAT以外的模型，NAT网关对内部主机地址端口的映射都是相对固定的，所以比较容易实现NAT穿越。而对称型NAT为每个连接提供一个映射，使得转换后的公网地址和端口对不可预测。此时TURN可以与STUN绑定提供穿越NAT的服务，即在公网服务器上提供一个“地址端口对”，所有此“地址端口对”接收到的数据会经由探测建立的连接转发到内网主机上。TURN分配的这个映射“地址端口对”会通过STUN响应发给内部主机，后者将此信息放入建立连接的信令中通知通信的对端。这种探针技术是一种通用方法，不用在NAT设备上为每种应用协议开发功能，相对于ALG方式有一定普遍性。但是TURN中继服务会成为通信瓶颈。而且在客户端中增加探针功能要求每个应用都要增加代码才能支持。<br>
+<br>
+<strong>&nbsp; &nbsp; 中间件技术</strong><br>
+这也是一种通过开发通用方法解决NAT穿越问题的努力。与前者不同之处是，NAT网关是这一解决方案的参与者。与ALG的不同在于，客户端会参与网关公网映射信息的维护，此时NAT网关只要理解客户端的请求并按照要求去分配转换表，不需要自己去分析客户端的应用层数据。其中UPnP就是这样一种方法。UPnP中文全称为通用即插即用，是一个通用的网络终端与网关的通信协议，具备信息发布和管理控制的能力。其中，网关映射请求可以为客户动态添加映射表项。此时，NAT不再需要理解应用层携带的信息，只转换IP地址和端口信息。而客户端通过控制消息或信令发到公网侧的信息中，直接携带公网映射的IP地址和端口，接收端可以按照此信息建立数据连接。NAT网关在收到数据或连接请求时，按照UPnP建立的表项只转换地址和端口信息，不关心内容，再将数据转发到内网。这种方案需要网关、内部主机和应用程序都支持UPnP技术，且组网允许内部主机和NAT网关之间可以直接交换UPnP信令才能实施。<br>
+<br>
+<strong>&nbsp; &nbsp; 中继代理技术</strong><br>
+准确说它不是NAT穿越技术，而是NAT旁路技术。简单说，就是在NAT网关所在的位置旁边放置一个应用服务器，这个服务器在内部网络和外部公网分别有自己的网络连接。客户端特定的应用产生网络请求时，将定向发送到应用代理服务器。应用代理服务器根据代理协议解析客户端的请求，再从服务器的公网侧发起一个新的请求，把客户端请求的内容中继到外部网络上，返回的相应反方向中继。这项技术和ALG有很大的相似性，它要求为每个应用类型部署中继代理业务，中间服务器要理解这些请求。<br>
+<br>
+<strong>&nbsp; &nbsp; 特定协议的自穿越技术</strong><br>
+在所有方法中最复杂也最可靠的就是自己解决自己的问题。比如IKE和IPsec技术，在设计时就考虑了到如何穿越NAT的问题。因为这个协议是一个自加密的协议并且具有报文防修改的鉴别能力，其他通用方法爱莫能助。因为实际应用的NAT网关基本都是NAPT方式，所有通过传输层协议承载的报文可以顺利通过NAT。IKE和IPsec采用的方案就是用UDP在报文外面再加一层封装，而内部的报文就不再受到影响。IKE中还专门增加了NAT网关是否存在的检查能力以及绕开NAT网关检测IKE协议的方法。<br><h1 style="padding-bottom: 10px; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); margin-top: 25px; margin-bottom: 20px;font-size: 2.0em;">4. NAT的应用和实现</h1><h2 style="font-size: 1.4em;margin: 15px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">4.1 NAT的应用</h2>
+NAT在当代Internet中被广泛采用，小至家庭网关，大到企业广域网出口甚至运营商业务网络出口。其实NAT在用户身边随处可见，一般家庭宽带接入的ADSL Modem和SOHO路由器都内置了NAT功能，WindowsXP支持网络连接共享，一个用户连接到公网可能会经过多层NAT而对此一无所知。很多企业也为节约IP费用采用NAT接入Internet，但是相比家庭用户有更复杂的需求。<br>
+<br>
+<strong>&nbsp; &nbsp; NAT多实例应用</strong><br>
+在VPN网络中，多实例路由意味着一个物理拓扑上承载多个逻辑拓扑，网络终端被分配到相互隔离的逻辑拓扑中，彼此之间没有路由的通路。但在访问Internet或者一些关键服务器资源时，被隔离的网络之间又存在共享资源的需求。NAT的多实例实现就是跨越这种逻辑拓扑的方法，把一个空间的网络地址映射到另一个空间。<br>
+<br>
+<strong>&nbsp; &nbsp; NAT的高可靠性组网</strong><br>
+提高网络可靠性是一个广泛的需求，NAT作为私网到公网的关键路径自然也需要高可靠性。当一个设备提供多个公网接口时，在多接口上部署NAT可以提供更高带宽和多ISP就近访问的能力。但是，当部署多个出口时，访问的流量可能会从不匹配的接口返回，这就要求NAT方案有良好的路由规划和部署合适的策略保证这种流量能够正确处理。在多个物理设备承担NAT功能时，不同设备之间的信息备份和流量分担也是一个组网难题。<br>
+<br>
+<strong>&nbsp; &nbsp; 同时转换源和目的地址的应用</strong><br>
+前面我们介绍的所有NAT应用中，由内网向外网访问过程中，都是将源地址进行转换而目的地址保持不变，报文反方向进入时则处理目的地址。但有一些特殊应用需要在由内向外的IP通路上，替换目的IP地址。通常，这种应用会同时替换源地址和目的地址，在经过NAT网关以后完成两次地址转换。当两个均规划使用私属IP地址范围的网络进行合并时，终端用户都不想调整自己的IP地址方案，又希望开放一些网络资源给彼此访问。这时就可以通过NAT的两次地址转换来解决路由和地址规划无法解决的问题。<br>
+<br>
+<img id="_aimg_188" aid="188" zoomfile="data/attachment/forum/201509/06/203248s85pmn8l0iicoc0c.png" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/203248s85pmn8l0iicoc0c.png" class="zoom" onclick="zoom(this, this.src, 0, 0, 0)" width="488" alt="图5 同时转换源和目的地址的应用" title="图5 同时转换源和目的地址的应用" w="488"><br>
+<font face="楷体, 楷体_GB2312"><font color="#808080">图5 同时转换源和目的地址的应用</font></font><br><h2 style="font-size: 1.4em;margin: 40px 10px 20px 0;padding-left: 9px;border-left:6px solid #ff7e79;">4.2 NAT的设备实现</h2>
+NAT作为一个IP层业务特性，在产品实现中与防火墙、会话管理等特性有紧密联系，这是因为NAT判断一个进入设备的报文是否需要NAT处理，判断报文是否为一个新的连接，都需要通过匹配访问控制列表规则和查询会话关联表进行判断。为了满足不同应用场景的NAT需求， NAT的管理界面可提供用户多种配置策略。按照NAT的具体工作方式，又可以做如下分类。<br>
+<br>
+<strong>&nbsp; &nbsp; 静态一对一地址映射</strong><br>
+这种工作方式下，NAT把一个私网地址和一个公网地址做静态关联，在从内而外的方向，将源IP匹配的私网IP替换为公网IP，反方向则将目的IP匹配公网IP的报文替换为私网IP。网络层以上的部分不进行替换处理，只修正校验和。<br>
+<br>
+<strong>&nbsp; &nbsp; 静态多对多地址映射</strong><br>
+这种方式与上一种类似，只是把一段私网地址映射到一段公网地址。工作机制与前述的方式没有差别，只是简化配置工作量。<br>
+<br>
+<strong>&nbsp; &nbsp; 动态端口映射</strong><br>
+这是最基本的工作方式，即前面多次介绍的将一段内网地址动态翻译为一个或多个公网IP，同时对传输层端口或其他上层协议信息进行转换，以实现IP复用。对由内而外的报文，替换源地址和端口，反向报文替换目的地址和端口。仅以连接公网的接口IP作为NAT转换的公网地址时，这种配置最简化，又被称为EasyIP。当以一段公网IP地址作为NAT转换地址时，需要配置一个地址池，NAT会自动在地址池中选择使用公网IP。<br>
+<br>
+<strong>&nbsp; &nbsp; 动态地址映射(no-pat)</strong><br>
+这是介于静态多对多地址映射和动态端口映射方式之间的一种工作机制。当有一个私网向公网侧访问到达NAT网关时，NAT网关会检查这个私网IP是否已经有关联的公网IP映射。如果已经存在，则按照转换表直接替换IP，不修改上层协议。如果不存在关联表项，则在空闲的公网IP池中占用一个IP，并写入关联表中，以后按照这个关联关系进行地址转换。当这个私网主机发起的所有对外访问均关闭或超时后，回收公网IP。这种方式可以理解为一组内网主机抢占式地共享一个公网IP地址池。当公网IP地址池用完以后，新连接将无法建立。<br>
+<br>
+<strong>&nbsp; &nbsp; 静态端口映射</strong><br>
+通过静态配置，把一个固定的私网IP地址和端口关联到一个公网地址和端口上。这种方式等同于前面介绍过的全锥模式，但是不需要内网主机首先发出报文。这种方式适用于在NAT网关上把一个知名服务（如HTTP）映射到一个内部主机上，也称为port forwarding。<br>
+<br>
+<strong>&nbsp; &nbsp; 应用层网关(ALG)</strong><br>
+在所有NAT产品实现中，ALG是一个必需的功能组件。但在不同实现中，有些产品可以动态加载不同的ALG模块，有些产品可以提供ALG开关控制，有些则不提供任何用户接口。ALG解析上层应用协议的内容，并且根据需要修改IP和端口相关信息，创建和维护附加的关联表项。<br>
+<br>
+<strong>&nbsp; &nbsp; NAT转换关联表</strong><br>
+无论哪一种NAT工作方式，都要用到地址转换关联表，在不同产品的实现中，这个关联表的存储结构和在IP转发中调用的方式有很大不同。关联表中会记录源IP、目的IP、连接协议类型、传输层源端口、目的端口，以及转换后的源IP、源端口，目的IP、目的端口信息，这里的源和目的都是对应于从内网到外网的访问方向。依据NAT具体工作方式，这些信息可能全部填充，也可能部分填充。例如只按照IP做静态映射的方式，就不需要填入任何端口相关信息；对于静态端口映射，则只填入源相关的内容，而目的端的信息为空。<br><h1 style="padding-bottom: 10px; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); margin-top: 25px; margin-bottom: 20px;font-size: 2.0em;">5. 后IPv4时代的NAT</h1>
+NAT是为延缓IPv4地址耗尽而推出的技术。毫无疑问，它已经出色完成了自己的历史使命，IPv4比预期走得更远。作为继任者的IPv6吸取了IPv4的教训，被赋予充足地址空间的同时在各个方面做了优化——安全、高效、简洁。但是IPv6无法平滑地取代IPv4，导致IP升级步伐缓慢。尽管网络协议的分层设计很清晰，大量应用层协议和互联网软件中仍内嵌了IPv4地址的处理，要Internet全网升级到IPv6，必须先完成应用的改造。因为NAT和它的穿越技术结合能够满足大部分用户的需求，所以IPv6时代被不断推迟。<br>
+<br>
+随着IPv4地址的濒临耗尽，再经济的模式也无以为继，IPv4必须退出历史舞台。人们自然会认为，NAT作为IPv4的超级补丁技术使命已经完结。实际情况是，IPv4向IPv6过渡的阶段，NAT仍然是一项必不可少的技术手段。因为Internet无法在一日之内完成全网升级，必然是局部升级，逐渐替换。在两套协议并存的时期，用户和服务资源分布在不同网络之间，跨网访问的需求必须得到满足。这正是NAT所擅长的领域，地址替换，因此NAT-PT应运而生。由于IPv4和IPv6之间的差异，NAT要做的事比以往更复杂，有更多的限制和细节。<br>
+<br>
+此外，IETF也在制定纯IPv6网络使用的NAT规范。虽然人们还看不到这种应用的强烈需求，但是NAT仍有其独特的作用，比如隐藏内部网络的地址，实现重叠地址网络的合并等。<br>
+<br>
+毫不夸张地说，正是有了NAT，以IPv4为基础的Internet才能容纳数十亿的用户终端，成就今日之辉煌。IPv4已至日暮西山，IPv6的黎明尚未来临，Internet比任何时刻都更依赖NAT这项过渡技术。NAT的历史再次证明，翻天覆地的划时代进步不一定有市场，抱残守缺的修修补补未必不会成功。在世代更替之时让我们走近NAT，领略IP领域更多细微但不高深的知识，理解NAT就是理解变换万千的应用世界。<br>
+<br></td>
+</tr>
+<tr>
+<td>
+<p style="float:right;padding: 8px 0;line-height: 190%;text-align: justify;color: #999999;font-size: 12px;">
+<a rel="friend" href="http://www.52im.net/article-64-1.html" title="即时通讯网 - 即时通讯开发者社区！"><img style="padding:0px;border:0px;vertical-align:middle;" src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/cngeeker_logo_32_32.png" width="13px" height="13px" alt="即时通讯网 - 即时通讯开发者社区！"></a>
+来源：<a rel="author" href="http://www.52im.net/article-64-1.html" target="_blank" title="即时通讯网 - 即时通讯开发者社区！" style="color:#8dbd2c;">即时通讯网</a> - 即时通讯开发者社区！
+</p>
+</td>
+</tr>
+</tbody></table>
+
+<!--[diy=diycontentbottom]--><div id="diycontentbottom" class="area"></div><!--[/diy]-->
+
+<script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/home.js.下载" type="text/javascript"></script>
+<div id="click_div"><script type="text/javascript">
+function errorhandle_clickhandle(message, values) {
+if(values['id']) {
+showCreditPrompt();
+show_click(values['idtype'], values['id'], values['clickid']);
+}
+}
+</script>
+
+<h3 class="mbm xs1" style="display:none;">
+刚表态过的朋友 (<a href="javascript:;" onclick="show_click(&#39;aid&#39;, &#39;64&#39;, &#39;2&#39;)"> 人</a>)
+</h3>
+<div id="trace_div" class="xs1">
+<div class="js-ptl-atcl-zan cl"><a href="http://www.52im.net/home.php?mod=spacecp&amp;ac=click&amp;op=add&amp;clickid=1&amp;idtype=aid&amp;id=64&amp;hash=70371c922032649c9d6937b4e57cc443&amp;handlekey=clickhandle" id="click_aid_64_1" onclick="showWindow(this.id, this.href);doane(event);" data-action="ding" data-id="36684" title="点我推荐!" class="agree">
+<i class="icon-thumbs-up"></i> <span>2</span>
+</a>
+<span class="desc">推荐</span>
+</div>
+<ul id="trace_ul" class="ml mls cl">
+<li>
+<div class="avt"><a href="http://www.52im.net/space-uid-193.html" target="_blank" title="已推荐"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar.php"></a></div>
+<p><a href="http://www.52im.net/space-uid-193.html" title="独孤小编" target="_blank">独孤小编</a></p>
+</li>
+<li>
+<div class="avt"><a href="http://www.52im.net/space-uid-1.html" target="_blank" title="已推荐"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(1).php"></a></div>
+<p><a href="http://www.52im.net/space-uid-1.html" title="JackJiang" target="_blank">JackJiang</a></p>
+</li>
+</ul>
+</div>
+
+</div>
+
+
+<!--[diy=diycontentclickbottom]--><div id="diycontentclickbottom" class="area"></div><!--[/diy]-->
+
+</div>
+
+<div class="o cl ptm pbm" style="display:none;">
+</div>
+<div class="pren pbm mbw js-ptl-atcl-switch cl">
+<a class="nextbig" href="http://www.52im.net/portal.php?mod=view&amp;aid=95" title="专访融云杨威：移动端即时通讯服务如何做到极致优化">
+<span>新一篇：</span> <i class="icon-circle-arrow-right"></i><br><em>专访融云杨威：移动端即时通讯服务如何做到极致优化</em>
+</a>
+</div>
+</div>
+
+<!--[diy=diycontentrelatetop]--><div id="diycontentrelatetop" class="area"></div><!--[/diy]--><div id="related_article" class="bm qing_shadow2">
+<div class="bm_h js-ptl-atcl-t cl">
+<h3>相关阅读</h3>
+</div>
+<div class="bm_c js-ptl-atcl-r">
+<ul class="xl xl2 cl" id="raid_div"><input type="hidden" value="23">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-23-1.html">我是如何走向程序之路的</a></li>
+<input type="hidden" value="42">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-42-1.html">爆笑Gif动画，看懂C++和Java的垃圾回收机制</a></li>
+<input type="hidden" value="47">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-47-1.html">程序员、设计师、项目经理眼中的他们</a></li>
+<input type="hidden" value="48">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-48-1.html">【视频】程序员之歌：《程序员都是SB，女神是计算机》</a></li>
+<input type="hidden" value="49">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-49-1.html">【视频】15种数据结构排序算法可视化展示（很直观）</a></li>
+<input type="hidden" value="50">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-50-1.html">变革：详解移动端即时通讯及国内相关产品的先行者</a></li>
+<input type="hidden" value="51">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-51-1.html">马云马化腾一起谈微信与来往之战：太舒服了一定会出事儿</a></li>
+<input type="hidden" value="53">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-53-1.html">马云：宁可死在“来往”路上 也绝不活在“微信”群里</a></li>
+<input type="hidden" value="56">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-56-1.html">独家采访微信团队：谁在用人工智能武装微信？</a></li>
+<input type="hidden" value="63">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-63-1.html">中国电信携网易将推即时通讯工具易信</a></li>
+<input type="hidden" value="70">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-70-1.html">即时通讯云服务：连接亿万级市场的“第一节点”</a></li>
+<input type="hidden" value="98">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-98-1.html">融云首席架构师李淼：即时通讯服务异地双活的那些事儿</a></li>
+<input type="hidden" value="99">
+<li><i class="icon-hand-right"></i> <a href="http://www.52im.net/article-99-1.html">融云，自主研发真正不丢消息的即时通讯云服务</a></li>
+</ul>
+</div>
+</div>
+
+<!--[diy=diycontentrelate]--><div id="diycontentrelate" class="area"></div><!--[/diy]-->
+
+            <div class="qing_shadow2"><div id="comment" class="bm js-ptl-atcl-cmt">
+<div class="bm_h js-ptl-atcl-t cl">
+<a href="http://www.52im.net/thread-50-1-1.html" class="y xi2">查看全部评论 <em id="_commentnum">(6)</em> <i class="icon-chevron-right"></i></a>
+
+<a href="javascript:;" class="y xi2" onclick="location.href=location.href.replace(/(\#.*)/, &#39;&#39;)+&#39;#cform&#39;;$(&#39;message&#39;).focus();return false;"><i class="icon-comment-alt"></i> 发表评论</a>
+<h3>最新评论</h3>
+</div>
+<div id="comment_ul" class="bm_c mtn"><a name="comment_anchor_2897"></a>
+<dl id="comment_2897_li" class="ptm pbm cl">
+<dt class="mbn">
+<span class="li-avatar">
+  <a href="http://www.52im.net/space-uid-1729.html" target="_blank" c="1" mid="card_8942"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(2).php"></a>
+</span>
+
+<span class="y xw0 xi2 li-buttons">
+<a href="javascript:;" onclick="portal_comment_requote(2897, &#39;64&#39;);" title="引用"><i class="icon-comment-alt"></i></a> </span>
+<a href="http://www.52im.net/space-uid-1729.html" class="xi2 xw1 name" c="1" mid="card_8942">xtgss007</a>
+<span class="xg1 xw0"><span title="2016-12-27 15:41">8&nbsp;个月前</span></span>
+</dt>
+<dd>简单易懂。</dd>
+</dl><a name="comment_anchor_3495"></a>
+<dl id="comment_3495_li" class="ptm pbm cl">
+<dt class="mbn">
+<span class="li-avatar">
+  <a href="http://www.52im.net/space-uid-2664.html" target="_blank" c="1" mid="card_4035"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(3).php"></a>
+</span>
+
+<span class="y xw0 xi2 li-buttons">
+<a href="javascript:;" onclick="portal_comment_requote(3495, &#39;64&#39;);" title="引用"><i class="icon-comment-alt"></i></a> </span>
+<a href="http://www.52im.net/space-uid-2664.html" class="xi2 xw1 name" c="1" mid="card_4035">itcxiaowu</a>
+<span class="xg1 xw0"><span title="2017-03-30 17:14">5&nbsp;个月前</span></span>
+</dt>
+<dd>分析得很清晰</dd>
+</dl><a name="comment_anchor_3605"></a>
+<dl id="comment_3605_li" class="ptm pbm cl">
+<dt class="mbn">
+<span class="li-avatar">
+  <a href="http://www.52im.net/space-uid-2800.html" target="_blank" c="1" mid="card_7049"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(4).php"></a>
+</span>
+
+<span class="y xw0 xi2 li-buttons">
+<a href="javascript:;" onclick="portal_comment_requote(3605, &#39;64&#39;);" title="引用"><i class="icon-comment-alt"></i></a> </span>
+<a href="http://www.52im.net/space-uid-2800.html" class="xi2 xw1 name" c="1" mid="card_7049">xlf123</a>
+<span class="xg1 xw0"><span title="2017-04-16 15:28">4&nbsp;个月前</span></span>
+</dt>
+<dd>谢谢楼主分享~~</dd>
+</dl><a name="comment_anchor_4542"></a>
+<dl id="comment_4542_li" class="ptm pbm cl">
+<dt class="mbn">
+<span class="li-avatar">
+  <a href="http://www.52im.net/space-uid-3940.html" target="_blank" c="1" mid="card_697"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(5).php"></a>
+</span>
+
+<span class="y xw0 xi2 li-buttons">
+<a href="javascript:;" onclick="portal_comment_requote(4542, &#39;64&#39;);" title="引用"><i class="icon-comment-alt"></i></a> </span>
+<a href="http://www.52im.net/space-uid-3940.html" class="xi2 xw1 name" c="1" mid="card_697">zjjishitongxun</a>
+<span class="xg1 xw0"><span title="2017-08-02 13:44">1&nbsp;个月前</span></span>
+</dt>
+<dd>nat端口老化超时进行了回收，可进行连接保活</dd>
+</dl><a name="comment_anchor_4881"></a>
+<dl id="comment_4881_li" class="ptm pbm cl">
+<dt class="mbn">
+<span class="li-avatar">
+  <a href="http://www.52im.net/space-uid-1.html" target="_blank" c="1" mid="card_5570"><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/avatar(1).php"></a>
+</span>
+
+<span class="y xw0 xi2 li-buttons">
+<a href="javascript:;" onclick="portal_comment_requote(4881, &#39;64&#39;);" title="引用"><i class="icon-comment-alt"></i></a> </span>
+<a href="http://www.52im.net/space-uid-1.html" class="xi2 xw1 name" c="1" mid="card_5570">JackJiang</a>
+<span class="xg1 xw0"><span title="2017-08-29 20:53">6&nbsp;天前</span></span>
+</dt>
+<dd><div class="quote"><blockquote><span class="qt_hint"><b>引用：</b></span><font size="2"><a href="http://www.52im.net/forum.php?mod=redirect&amp;goto=findpost&amp;pid=4542&amp;ptid=50" target="_blank"><font color="#999999">zjjishitongxun 发表于 2017-08-02 13:44</font></a></font><br>
+nat端口老化超时进行了回收，可进行连接保活</blockquote></div><br>
+正解</dd>
+</dl><form id="cform" name="cform" action="http://www.52im.net/forum.php?mod=post&amp;action=reply&amp;tid=50&amp;replysubmit=yes&amp;infloat=yes&amp;handlekey=fastpost" method="post" autocomplete="off" class="mtm">
+<div class="tedt">
+<div class="area">
+<textarea name="message" rows="3" class="pt" id="message" onkeydown="ctrlEnter(event, &#39;commentsubmit_btn&#39;);"></textarea>
+</div>
+</div>
+
+<input type="hidden" name="portal_referer" value="portal.php?mod=view&amp;aid=64#comment">
+<input type="hidden" name="referer" value="portal.php?mod=view&amp;aid=64#comment">
+<input type="hidden" name="id" value="50">
+<input type="hidden" name="idtype" value="tid">
+<input type="hidden" name="aid" value="64">
+<input type="hidden" name="formhash" value="79e54b2c">
+<input type="hidden" name="replysubmit" value="true">
+<input type="hidden" name="commentsubmit" value="true">
+<p class="ptm"><button type="submit" name="commentsubmit_btn" id="commentsubmit_btn" value="true" class="pn"><strong>评论</strong></button></p>
+</form>
+</div>
+</div>            </div>
+
+<!--[diy=diycontentcomment]--><div id="diycontentcomment" class="area"></div><!--[/diy]-->
+
+
+</div>
+<div class="sd pph">
+
+
+<div class="drag">
+<!--[diy=diyrighttop]--><div id="diyrighttop" class="area"></div><!--[/diy]-->
+</div>
+
+<div class="bm qing_shadow">
+<div class="bm_h cl">
+<h2><i class="icon-circle-arrow-down"></i> 相关分类</h2>
+</div>
+<div class="bm_c">
+<ul class="qingwz_relate"><a href="http://www.52im.net/haha/">程序员那点事</a>
+<a href="http://www.52im.net/life/">程序人生</a>
+<a href="http://www.52im.net/pi/">资讯</a>
+<a href="http://www.52im.net/pbbs2/">社区精选</a>
+</ul>
+</div>
+</div>
+
+            <div class="bm qing_rmtz">
+            	<div class="bm_h"><h2><i class="icon-circle-arrow-down"></i> 本月热门资讯</h2></div>
+                <div class="bm_c">
+                	<ul>
+                    	<!--[diy=qing_wzview_rmtz]--><div id="qing_wzview_rmtz" class="area"></div><!--[/diy]-->
+                    </ul>
+                </div>
+            </div>
+
+<div class="bm qing_hwfl">
+            	<div class="bm_h"><h2><i class="icon-circle-arrow-down"></i> 技术好文分类<a href="http://www.52im.net/forum.php?mod=collection&amp;op=all" class="ask-list-more" target="_blank">[更多]</a></h2></div>
+                <div class="bm_c">
+                	<div class="feilei_c cl" style="margin-top: 5px;">
+<a href="http://www.52im.net/topic-tcpipvol1.html" target="_blank" class="feilei_c_tcpip">TCP/IP详解<span class="feilei_c_tcpip_f">经典</span></a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=8" target="_blank">网络编程基础</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=9" target="_blank">NIO编程精选</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=18" target="_blank">通信协议选型</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=7" target="_blank">IM架构篇</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=6" target="_blank">IM安全篇</a> 
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=17" target="_blank">心跳保活篇</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=10" target="_blank">IM综合资料</a>  
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=4" target="_blank">实时音视频开发</a>  
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=5" target="_blank">WebRTC资料</a>	
+    <a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=15" target="_blank">Web端实时通信</a>
+<a href="http://www.52im.net/forum.php?mod=collection&amp;action=view&amp;ctid=11" target="_blank">推送技术好文</a>
+</div>	 
+                </div>
+            </div>
+
+<div class="bm qing_rmtz">
+            	<div class="bm_h"><h2><i class="icon-circle-arrow-down"></i> 最新社区主题<a href="http://www.52im.net/forum.php" class="ask-list-more" target="_blank">[更多]</a></h2></div>
+                <div class="bm_c">
+                	<ul>
+                    	<!--[diy=qing_wzview_shequzhuti]--><div id="qing_wzview_shequzhuti" class="area"></div><!--[/diy]-->
+                    </ul>
+                </div>
+            </div>
+
+<div class="drag">
+<!--[diy=diy2]--><div id="diy2" class="area"></div><!--[/diy]-->
+</div>
+
+
+</div>
+</div>
+
+
+<div class="wp mtn">
+<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+</div>
+<input type="hidden" id="portalview" value="1">	</div>
+
+
+
+<div id="ft" class="wp">
+<div id="js_ift_placehold"></div>
+<div id="js_ift" class="js-clearfix js-saya-footer">
+  <div class="js-clearfix js-saya cl">
+<div class="js-clearfix js-footer hidden-xs cl">
+  <div class="js-sspai hidden-xs">
+<h4>即时通讯网　</h4>
+<div style="padding-right:30px;">
+  <p>实时推送、IM等即时通讯相关技术的学习、交流与分享的平台。专业的资料、专业的人、专业的社区！让即时通讯技术能更好传播与分享。</p>
+  <div class="color-slogan"> 
+<span class="js-slogan js-slogan-1">平等</span> 
+<span class="js-slogan js-slogan-2">开放</span> 
+<span class="js-slogan js-slogan-3">分享</span> 
+<span class="js-slogan js-slogan-4">传承</span>
+  </div>
+  <p>
+商务/合作：<a href="http://www.52im.net/#">business@52im.net</a><br>
+投稿/报道：<a href="http://www.52im.net/#">contact@52im.net</a>
+  </p>
+
+
+</div>
+  </div>
+  <div class="js-functions hidden-xs">
+<h4>友情链接<a href="http://www.52im.net/thread-402-1-1.html" class="friend_link">[友链交换]</a></h4>
+<ul>
+  <li> <a href="http://webrtc.org.cn/" target="_blank"> WebRTC中文网 </a> </li>
+  <li> <a href="https://github.com/JackJiang2011/" target="_blank"> JackJiang的Git </a> </li>
+  <li> <a href="http://www.easydarwin.org/" target="_blank"> EasyDarwin </a> </li>
+  <li> <a href="http://www.17ky.net/" target="_blank" title="争做中国最大的开源分享及荟萃平台，为IT开发者提供一个发现、使用、并交流开源技术的平台"> 一起开源网 </a> </li>
+  <li> <a href="https://www.jpush.cn/" target="_blank"> 极光推送 </a> </li>
+  <li> <a href="http://www.itzhanzhang.com/" target="_blank"> IT站长 </a> </li>
+</ul>
+  </div>
+  <div class="js-about hidden-xs">
+<h4>关于</h4>
+<ul class="">
+  <li> <a href="http://www.52im.net/topic-about.html"> 关于我们 </a> </li>
+  <li> <a href="http://www.52im.net/topic-qqgroup.html"> 活跃QQ群 <sup style="color:rgb(221,0,0);">hot</sup> </a> </li>
+  <li> <a href="http://www.52im.net/topic-docs.html"> 在线文档 </a> </li>
+  <li> <a href="http://www.52im.net/topic-sitelist.html"> 网址导航 </a> </li>
+</ul>
+  </div>
+  <div class="js-weixin-qr hidden-xs">
+<h4>手机访问本站</h4>
+<p><img src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/cngeeker_weixin.png" alt="即时通讯网微信公众号" title="即时通讯微信公众号"></p>
+  </div>
+</div>
+
+
+  </div>
+  <div class="js-clearfix js-copyright">
+<div class="js-clearfix js-saya">
+  <div class="js-copyright-text">
+<div class="js-text">
+  <p class="js-site">Copyright &#169; 2014-2017 即时通讯网 - 即时通讯开发者社区 <span class="hidden-xs">/ 版本 V4.0</span></p>
+  <p class="js-ipc">网际时代旗下网站 <a href="http://www.miitbeian.gov.cn/" getarticles="" target="_blank">(苏ICP备16005070号-1）</a></p>
+</div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+<p class="xs0">
+
+<span id="debuginfo">
+Processed in 0.109375 second(s), 28 queries
+, Gzip On.
+</span>
+</p></div>
+<script src="./NAT详解：基本原理、穿越技术(P2P打洞)、端口老化等 - 社区精选 - 即时通讯开发者社区!_files/home.php" type="text/javascript"></script>
+<div id="scrolltop" style="left: auto; right: 0px; visibility: visible;">
+<span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo(&#39;0&#39;,&#39;0&#39;)" class="scrolltopa"><b>返回顶部</b></a></span>
+</div>
+<script type="text/javascript">_attachEvent(window, 'scroll', function () { showTopLink(); });checkBlind();</script>
+
+
+<remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt"><label>限制解除 <input type="checkbox" name="" id="black_node"></label></remove-web-limits-iqxin><div id="jumpToTopBtn" style="display: block;">Jump!</div></body></html>
