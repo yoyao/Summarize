@@ -1,0 +1,605 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0113)http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Protocol https not supported or disabled in libcurl解决方法 «  青剑 Steven </title>
+		<meta name="keywords" content="">
+	<meta name="description" content="在php程序中使用curl去访问https站点时，报错：
+Protocol https not supported or disabled in libcurl
+
+该错误信息表示php当时编译时使用的curl库不支持https, 验证方法为
+你的curl安装目录/bin/curl  ">
+	<link href="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/jquery.min.js.下载"></script>
+	<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="http://www.520sz.com/wp-content/themes/Hcms/js/jquery.js">\x3C/script>')</script>
+	<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/jquery_cmhello.js.下载"></script>
+		<script type="text/javascript">HcmsLazyload("http://www.520sz.com/wp-content/themes/Hcms/images/space.gif");</script> 
+	<!--[if IE 6]>
+	<link href="http://www.520sz.com/wp-content/themes/Hcms/ie6.css" rel="stylesheet" type="text/css" />
+	<script src="http://letskillie6.googlecode.com/svn/trunk/letskillie6.zh_CN.pack.js"></script>
+	<script src="http://www.520sz.com/wp-content/themes/Hcms/js/PNG.js"></script>
+	<script>DD_belatedPNG.fix('.png_bg');</script>
+	<![endif]-->
+	<link rel="shortcut icon" href="http://www.520sz.com/favicon.ico">
+	<link rel="alternate" type="application/rss+xml" title="青剑 Steven RSS Feed" href="http://www.520sz.com/feed">
+	<link rel="alternate" type="application/atom+xml" title="青剑 Steven Atom Feed" href="http://www.520sz.com/feed/atom">
+	<link rel="pingback" href="http://www.520sz.com/xmlrpc.php">
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.520sz.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/wp-emoji-release.min.js.下载" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/jquery.js.下载"></script>
+<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/jquery-migrate.min.js.下载"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.520sz.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.520sz.com/wp-includes/wlwmanifest.xml"> 
+
+<link rel="stylesheet" type="text/css" media="screen" href="http://www.520sz.com/wp-content/plugins/google-analytics-visits/css/style.css">
+	<link type="text/css" rel="stylesheet" href="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/shCoreDefault.css">
+	<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/shCore.js.下载"></script>
+	<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/shAutoloader.js.下载"></script>
+	<style id="c0780886-9fe3-4cec-b9a3-f033b014ac37">#rwl-iqxin{position:fixed;top:0;left:0px;transform:translate(-62px,0);width:58px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}</style><style type="text/css">
+:root #header + #content > #left > #rlblock_left
+{ display: none !important; }</style></head>
+<body>
+	<div id="header" class="png_bg">
+		<div id="header_inner">
+    		<strong class="logo">
+			<a href="http://www.520sz.com/" class="png_bg" title="青剑 Steven">青剑 Steven</a>
+			</strong>
+       <div class="header_bg png_bg"></div>
+       <div class="toplinks">
+       <div id="_userlogin"><em>探讨PHP技术，MagenTo、ZenCart、ShopEx等系统</em> 	
+			<a href="http://feed.feedsky.com/Stevenliao" title="欢迎订阅我的博客" target="_blank">RSS订阅</a> 
+       </div>
+       	<div id="top_nav">
+			<form name="formsearch" method="get" action="http://www.520sz.com/">
+				<div class="form clearfix">
+           		<label for="s"></label>
+           		<input type="text" name="s" class="search-keyword" onfocus="if (this.value == &#39;请输入关键字进行搜索&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;请输入关键字进行搜索&#39;;}" value="请输入关键字进行搜索">   
+         		<button type="submit" class="select_class" onmouseout="this.className=&#39;select_class&#39;" onmouseover="this.className=&#39;select_over&#39;">搜索</button>
+				</div>
+			</form>
+            </div>
+       </div>
+	   <div id="navmenu" class="menu-%e8%8f%9c%e5%8d%95%e4%b8%80-container"><ul id="menu-%e8%8f%9c%e5%8d%95%e4%b8%80" class="menu"><li id="menu-item-52" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-52"><a href="http://www.520sz.com/">首页</a></li>
+<li id="menu-item-55" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-55"><a href="http://www.520sz.com/">插件</a>
+<ul class="sub-menu">
+	<li id="menu-item-56" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-56"><a href="http://www.520sz.com/category/zencart%e6%8f%92%e4%bb%b6">ZenCart插件</a></li>
+	<li id="menu-item-57" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-57"><a href="http://www.520sz.com/category/shopex%e6%8f%92%e4%bb%b6">ShopEx插件</a></li>
+</ul>
+</li>
+<li id="menu-item-71" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-71"><a href="http://mb.520sz.com/">模板</a></li>
+<li id="menu-item-59" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-has-children menu-item-59"><a href="http://www.520sz.com/" style="color: rgb(180, 171, 147);">程序发布</a>
+<ul class="sub-menu" style="display: none;">
+	<li id="menu-item-60" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-60"><a href="http://www.520sz.com/fttms">外贸交易管理系统</a></li>
+	<li id="menu-item-61" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-61"><a href="http://www.520sz.com/myoffice">MyOffice PHP开源个人资料管理系统</a></li>
+</ul>
+</li>
+<li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="http://www.520sz.com/about-me">关于青剑</a></li>
+<li id="menu-item-65" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65"><a href="http://www.520sz.com/tags">Tags</a></li>
+<li id="menu-item-64" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-64"><a href="http://www.520sz.com/guestbook">留言</a></li>
+</ul></div>	   <div class="clearfix"></div>
+    </div>
+</div><div id="wrapper" class="clearfix">
+	<div id="breadcrumbs" class="con_box clearfix">
+		<div class="bcrumbs"><strong><a href="http://www.520sz.com/" title="返回首页">home</a></strong>
+		<a href="http://www.520sz.com/category/%e9%97%ae%e9%a2%98%e5%8f%8a%e8%a7%a3%e5%86%b3" rel="category tag">问题及解决</a>		<a>Protocol https not supported or disabled in libcurl解决方法</a>
+		</div>
+	</div>
+ 	<div id="art_container clearfix">
+ 		<div id="art_main1" class="art_white_bg fl"> 
+			            <div class="art_title clearfix">
+            <span class="face_img"><img alt="" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/3484344b5de276087887e835f8215ce7" srcset="http://0.gravatar.com/avatar/3484344b5de276087887e835f8215ce7?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50" original="http://0.gravatar.com/avatar/3484344b5de276087887e835f8215ce7?s=50&amp;d=mm&amp;r=g"></span>
+				<h1>Protocol https not supported or disabled in libcurl解决方法</h1>
+				<p class="info">
+				<small>时间:</small>12-10-24 
+				<small>栏目:</small><a href="http://www.520sz.com/category/%e9%97%ae%e9%a2%98%e5%8f%8a%e8%a7%a3%e5%86%b3" rel="category tag">问题及解决</a> 
+				<small>作者:</small>admin 
+				<small>评论:</small>2				<small>点击:</small> 26,311 次								</p><!-- /info -->  
+			</div>
+			<div class="article_content">
+				<div class="article-tag">
+								</div>
+																<div class="clear"></div>
+				<p>在php程序中使用curl去访问https站点时，报错：<br>
+Protocol https not supported or disabled in libcurl</p>
+<p>该错误信息表示php当时编译时使用的curl库不支持https, 验证方法为<br>
+你的curl安装目录/bin/curl&nbsp;&nbsp;-V&nbsp; 或curl&nbsp; -V<br>
+显示如下：<br>
+Protocols: dict file ftp gopher http imap pop3 rtsp smtp telnet tftp<br>
+这表示curl是不支持 https的</p>
+<p>为了支持https，需要下载源码包，重新编译curl</p>
+<p>tar zxvf curl-7.24.0.tar.gz<br>
+cd&nbsp;&nbsp;curl-7.24.0<br>
+./configure --prefix=/usr/local/services/curl-7.24.0 --with-ssl=/usr/local/services/openssl-0.9.8a<br>
+#请注意，这里一定要使用 --with-ssl 参数，前提是你已经安装了openssl-0.9.8a (建议安装0.9.8a 测试过0.9.7i有些bug）<br>
+该步骤执行结束后，一定要观察仔细，是否有这行<br>
+SSL support:&nbsp; &nbsp;&nbsp;&nbsp;enabled (OpenSSL)<br>
+如果你的是<br>
+SSL support:&nbsp; &nbsp;&nbsp;&nbsp;no<br>
+那就是说，你的curl依旧没有支持https</p>
+<p>make&nbsp;&nbsp;&amp;&amp;&nbsp;&nbsp;make install<br>
+在make的时候，也许你会遇到这样的错误：<br>
+`a local symbol' can not be used when making a shared object; recompile with -fPIC<br>
+libssl.a: could not read symbols: Bad value<br>
+解决办法，请参考<a href="http://mylinux.5d6d.net/viewthread.php?tid=1013" target="_blank">http://mylinux.5d6d.net/viewthread.php?tid=1013</a><br>
+安装完成后，再次运行<br>
+curl安装目录/bin/curl -V<br>
+结果为<br>
+Protocols: dict file ftp gopher http https imap pop3 rtsp smtp telnet tftp<br>
+这说明已经支持了https</p>
+<p>剩下的就是重新编译php， 当然相应的支持curl的参数为&nbsp;&nbsp;--with-curl=你的curl安装目录</p>
+<p>然后使用:php -i |grep "curl"查看。</p>
+<p>解决方法二：</p>
+<p>使用以下代码代替CURL函数：</p>
+<div><div id="highlighter_683425" class="syntaxhighlighter  php"><div class="toolbar"><span><a href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html#" class="toolbar_item command_help help"></a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1
+</div><div class="line number2 index1 alt1">2
+</div><div class="line number3 index2 alt2">3
+</div><div class="line number4 index3 alt1">4
+</div><div class="line number5 index4 alt2">5
+</div><div class="line number6 index5 alt1">6
+</div><div class="line number7 index6 alt2">7
+</div><div class="line number8 index7 alt1">8
+</div><div class="line number9 index8 alt2">9
+</div><div class="line number10 index9 alt1">10
+</div><div class="line number11 index10 alt2">11
+</div><div class="line number12 index11 alt1">12
+</div><div class="line number13 index12 alt2">13
+</div><div class="line number14 index13 alt1">14
+</div><div class="line number15 index14 alt2">15
+</div><div class="line number16 index15 alt1">16
+</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="php variable">$context</code> <code class="php plain">= </code><code class="php keyword">array</code><code class="php plain">();&nbsp;&nbsp; </code>
+</div><div class="line number2 index1 alt1">&nbsp;
+</div><div class="line number3 index2 alt2"><code class="php keyword">if</code> <code class="php plain">(</code><code class="php functions">is_array</code><code class="php plain">(</code><code class="php variable">$post</code><code class="php plain">))&nbsp;&nbsp; </code>
+</div><div class="line number4 index3 alt1"><code class="php plain">{&nbsp;&nbsp; </code>
+</div><div class="line number5 index4 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">ksort(</code><code class="php variable">$post</code><code class="php plain">);&nbsp;&nbsp; </code>
+</div><div class="line number6 index5 alt1">&nbsp;
+</div><div class="line number7 index6 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php variable">$context</code><code class="php plain">[</code><code class="php string">'http'</code><code class="php plain">] = </code><code class="php keyword">array</code>&nbsp;&nbsp;
+</div><div class="line number8 index7 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">(&nbsp;&nbsp; </code>
+</div><div class="line number9 index8 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'method'</code> <code class="php plain">=&gt; </code><code class="php string">'POST'</code><code class="php plain">,&nbsp;&nbsp; </code>
+</div><div class="line number10 index9 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'content'</code> <code class="php plain">=&gt; http_build_query(</code><code class="php variable">$post</code><code class="php plain">, </code><code class="php string">''</code><code class="php plain">, </code><code class="php string">'&amp;'</code><code class="php plain">), </code>
+</div><div class="line number11 index10 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php string">'header'</code> <code class="php plain">=&gt; </code><code class="php string">"Content-Type: application/x-www-form-urlencoded\r\n"</code>
+</div><div class="line number12 index11 alt1">&nbsp;
+</div><div class="line number13 index12 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php plain">);&nbsp;&nbsp; </code>
+</div><div class="line number14 index13 alt1"><code class="php plain">}&nbsp;&nbsp; </code>
+</div><div class="line number15 index14 alt2">&nbsp;
+</div><div class="line number16 index15 alt1"><code class="php variable">$content</code> <code class="php plain">= </code><code class="php functions">file_get_contents</code><code class="php plain">(</code><code class="php variable">$surl</code><code class="php plain">, false, stream_context_create(</code><code class="php variable">$context</code><code class="php plain">));</code>
+</div></div></td></tr></tbody></table></div></div>
+ 
+																<div class="clear"></div>
+            			
+				<div class="postcopyright">
+					<p><strong> 声明: </strong> 本文由(<a href="http://www.520sz.com/"> admin </a>)原创编译，转载请保留链接: <a href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95.html" title="Protocol" https="" not="" supported="" or="" disabled="" in="" libcurl解决方法="">Protocol https not supported or disabled in libcurl解决方法</a></p>
+				</div>
+							</div><!--正文--> 
+			<div class="con_pretext clearfix">
+					<ul>
+						<li class="first">上一篇：<a href="http://www.520sz.com/zencart-jump-payapl-order-title.html" rel="prev">ZenCart添加防漏单和跳转插件时修改递交参数中的商品名称为订单号</a> </li>
+						<li class="last">下一篇：<a href="http://www.520sz.com/opencart%e6%a8%a1%e6%9d%bf%e8%be%93%e5%87%ba%e7%a9%ba%e7%99%bd%e5%8e%9f%e5%9b%a0%e5%8f%8a%e8%a7%a3%e5%86%b3.html" rel="next">OpenCart模板输出空白原因及解决</a></li>
+					</ul>
+			</div><!--上一页 下一页-->              
+			<!-- You can start editing here. -->
+	<h3 id="comments">Protocol https not supported or disabled in libcurl解决方法：目前有2 条留言</h3>
+	<ol class="commentlist">
+	<li class="comment even thread-even depth-1" id="comment-656">
+   <div id="div-comment-656" class="comment-body">
+      		<div class="comment-author vcard"><img alt="" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://0.gravatar.com/avatar/f5b7e065039318232cd5b6ac8fc4ba3c?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40" original="http://0.gravatar.com/avatar/f5b7e065039318232cd5b6ac8fc4ba3c?s=40&amp;d=mm&amp;r=g">	<div class="floor">
+	沙发	</div>
+	<strong>zhongyc</strong>:</div>
+			<p>解决办法的链接打不开，是啥呢，求解，我邮箱：zhongyc_im@qq.com</p>
+		<div class="clear"></div><span class="datetime">2013-07-12 7:38 pm </span> <span class="reply"><a rel="nofollow" class="comment-reply-link" href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95.html?replytocom=656#respond" onclick="return addComment.moveForm( &quot;div-comment-656&quot;, &quot;656&quot;, &quot;respond&quot;, &quot;180&quot; )" aria-label="Reply to zhongyc">[回复]</a></span>
+  </div>
+<ul class="children">
+<li class="comment odd alt depth-2" id="comment-6130">
+   <div id="div-comment-6130" class="comment-body">
+      		<div class="comment-author vcard"><img alt="" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://1.gravatar.com/avatar/72326950ba674fec08b31a0c90663fe2?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40" original="http://1.gravatar.com/avatar/72326950ba674fec08b31a0c90663fe2?s=40&amp;d=mm&amp;r=g">	<div class="floor">
+		</div>
+	<strong>birdzhang</strong>:</div>
+			<p>+1</p>
+		<div class="clear"></div><span class="datetime">2014-07-31 10:00 am </span> <span class="reply"><a rel="nofollow" class="comment-reply-link" href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95.html?replytocom=6130#respond" onclick="return addComment.moveForm( &quot;div-comment-6130&quot;, &quot;6130&quot;, &quot;respond&quot;, &quot;180&quot; )" aria-label="Reply to birdzhang">[回复]</a></span>
+  </div>
+</li></ul><!-- .children -->
+</li>	</ol>
+	<div class="navigation">
+		<div class="page_navi"></div>
+	</div>
+
+ 		<div id="respond_box">
+	<div id="respond">
+		<h3>发表评论</h3>	
+		<div class="cancel-comment-reply">
+		<div id="real-avatar">
+			<img alt="" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/saved_resource" srcset="http://1.gravatar.com/avatar/?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo avatar-default" height="40" width="40">	</div>	
+			<small><a rel="nofollow" id="cancel-comment-reply-link" href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html#respond" style="display:none;">Click here to cancel reply.</a></small>
+		</div>
+		    <form action="http://www.520sz.com/wp-comments-post-520sz.php" method="post" id="commentform">
+      		<div id="comment-author-info">
+		<p>
+			<input type="text" name="author" id="author" class="commenttext" value="" size="22" tabindex="1">
+			<label for="author">昵称 *</label>
+		</p>
+		<p>
+			<input type="text" name="email" id="email" class="commenttext" value="" size="22" tabindex="2">
+			<label for="email">邮箱 * <a id="Get_Gravatar" title="查看如何申请一个自己的Gravatar全球通用头像" target="_blank" href="http://www.cmhello.com/gravatar.html">（教你设置自己的个性头像）</a></label>
+		</p>
+		<p>
+			<input type="text" name="url" id="url" class="commenttext" value="" size="22" tabindex="3">
+			<label for="url">网址</label>
+		</p>
+	</div>
+            <div class="clear"></div>
+      <p><script type="text/javascript" language="javascript">
+/* <![CDATA[ */
+    function grin(tag) {
+    	var myField;
+    	tag = ' ' + tag + ' ';
+        if (document.getElementById('comment') && document.getElementById('comment').type == 'textarea') {
+    		myField = document.getElementById('comment');
+    	} else {
+    		return false;
+    	}
+    	if (document.selection) {
+    		myField.focus();
+    		sel = document.selection.createRange();
+    		sel.text = tag;
+    		myField.focus();
+    	}
+    	else if (myField.selectionStart || myField.selectionStart == '0') {
+    		var startPos = myField.selectionStart;
+    		var endPos = myField.selectionEnd;
+    		var cursorPos = endPos;
+    		myField.value = myField.value.substring(0, startPos)
+    					  + tag
+    					  + myField.value.substring(endPos, myField.value.length);
+    		cursorPos += tag.length;
+    		myField.focus();
+    		myField.selectionStart = cursorPos;
+    		myField.selectionEnd = cursorPos;
+    	}
+    	else {
+    		myField.value += tag;
+    		myField.focus();
+    	}
+    }
+/* ]]> */
+</script>
+<a href="javascript:grin(&#39;:?:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_question.gif" alt=""></a>
+<a href="javascript:grin(&#39;:razz:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_razz.gif" alt=""></a>
+<a href="javascript:grin(&#39;:sad:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_sad.gif" alt=""></a>
+<a href="javascript:grin(&#39;:evil:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_evil.gif" alt=""></a>
+<a href="javascript:grin(&#39;:!:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_exclaim.gif" alt=""></a>
+<a href="javascript:grin(&#39;:smile:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_smile.gif" alt=""></a>
+<a href="javascript:grin(&#39;:oops:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_redface.gif" alt=""></a>
+<a href="javascript:grin(&#39;:grin:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_biggrin.gif" alt=""></a>
+<a href="javascript:grin(&#39;:eek:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_surprised.gif" alt=""></a>
+<a href="javascript:grin(&#39;:shock:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_eek.gif" alt=""></a>
+<a href="javascript:grin(&#39;:???:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_confused.gif" alt=""></a>
+<a href="javascript:grin(&#39;:cool:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_cool.gif" alt=""></a>
+<a href="javascript:grin(&#39;:lol:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_lol.gif" alt=""></a>
+<a href="javascript:grin(&#39;:mad:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_mad.gif" alt=""></a>
+<a href="javascript:grin(&#39;:twisted:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_twisted.gif" alt=""></a>
+<a href="javascript:grin(&#39;:roll:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_rolleyes.gif" alt=""></a>
+<a href="javascript:grin(&#39;:wink:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_wink.gif" alt=""></a>
+<a href="javascript:grin(&#39;:idea:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_idea.gif" alt=""></a>
+<a href="javascript:grin(&#39;:arrow:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_arrow.gif" alt=""></a>
+<a href="javascript:grin(&#39;:neutral:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_neutral.gif" alt=""></a>
+<a href="javascript:grin(&#39;:cry:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_cry.gif" alt=""></a>
+<a href="javascript:grin(&#39;:mrgreen:&#39;)"><img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/icon_mrgreen.gif" alt=""></a>
+<br></p>
+		<p><textarea name="w" id="comment" tabindex="4"></textarea><div id="loading" style="display: none;"> 正在提交, 请稍候...</div><div id="error" style="display: none;">#</div><textarea name="comment" cols="100%" rows="4" style="display:none"></textarea></p>
+		<p>
+			<input class="submit" name="submit" type="submit" id="submit" tabindex="5" value="提交[Ctrl+Enter]">
+			<input class="reset" name="reset" type="reset" id="reset" tabindex="6" value="重写">
+			<input type="hidden" name="comment_post_ID" value="180" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+		</p>
+		<script type="text/javascript">	//Crel+Enter
+			$(document).keypress(function(e){
+				if(e.ctrlKey && e.which == 13 || e.which == 10) { 
+					$(".submit").click();
+					document.body.focus();
+				} else if (e.shiftKey && e.which==13 || e.which == 10) {
+					$(".submit").click();
+				}          
+			})
+		</script>
+		<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="41c9b180eb"></p><p style="display: none;"></p>    <input type="hidden" id="ak_js" name="ak_js" value="1507991498799"></form>
+
+	<div class="clear"></div>
+      </div>
+  </div>
+  																<div class="clear"></div>
+		</div><!--内容-->
+
+			
+	</div>
+		<div class="clear"></div>
+
+<div id="sider" class="fr">
+	<div class="feed-mail">
+	<div class="box">
+		<ul id="contact-li">
+			<li class="qq"><a rel="nofollow" target="_blank" href="http://wpa.qq.com/msgrd?V=1&amp;Menu=yes&amp;Uin=583964941" title="有急事请Q我">QQ联系</a></li>
+			<li class="email"><a rel="nofollow" target="_blank" href="mailto:admin@520sz.com" title="发邮件给我">邮件</a></li>
+			<li class="twitter"><a rel="nofollow" target="_blank" href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html" title="收听我的Twitter微博">Twitter微博</a></li>
+			<li class="qqmblog"><a rel="nofollow" target="_blank" href="http://t.qq.com/lxq73061" title="收听我的腾讯微博">腾讯微博</a></li>
+			<li class="sinamblog"><a rel="nofollow" target="_blank" href="http://t.sina.com.cn/lxq73061" title="收听我的新浪微博">新浪微博</a></li>
+			<li class="rss"><a rel="nofollow" target="_blank" href="http://feed.feedsky.com/Stevenliao" title="通过RSS订阅我的博客">RSS订阅</a></li>
+		</ul>
+	</div>
+		<form action="http://list.qq.com/cgi-bin/qf_compose_send" target="_blank" method="post">
+			<input type="hidden" name="t" value="qf_booked_feedback">
+			<input type="hidden" name="id" value="输入腾讯邮件订阅ID">
+			<input id="to" onfocus="if (this.value == &#39;输入邮箱 订阅本站&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;输入邮箱 订阅本站&#39;;}" value="输入邮箱 订阅本站" name="to" type="text" class="feed-mail-input"><input class="feed-mail-btn" type="submit" value="订阅">
+		</form>
+		<div class="gg">
+<p>------======<strong> 本站公告 </strong>======------<br>
+联系信息：<br>
+lxq73061#qq.com
+qq:583964941
+<br>
+支付宝：https://me.alipay.com/lxq73061 <br>
+相关插件程序等信息均会在站内发布，敬请关注。</p>
+			<div class="clear"></div>
+</div>		<div class="clear"></div>
+</div><div class="clear"></div>
+	<div class="con_box htabs_art clearfix"> 
+		<ul class="cooltab_nav sj_nav clearfix">
+			<li><a href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html#" class="active" title="new_art">最新文章</a></li>
+			<li><a href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html#" title="hot_art">热门文章</a></li>
+			<li><a href="http://www.520sz.com/protocol-https-not-supported-or-disabled-in-libcurl%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95.html#" title="rand_art">随机推荐</a></li>
+		</ul>   
+		<div id="new_art" class="com_cont" style="display: block;">   
+			<ul>
+												<li>
+				<a href="http://www.520sz.com/php-tail.html" title="php模拟tail -f 实时输出日志" class="title">php模拟tail -f 实时输出日志</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/centos-wdcp-process.html" title="CentOS6.8 64位安装WDCP面板详细流程" class="title">CentOS6.8 64位安装WDCP面板详细...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/taobao-api.html" title="淘宝接口API开发 taobao代购系统API接口调用" class="title">淘宝接口API开发 taobao代购系统AP...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/php-auto-sync-time.html" title="php-auto-sync-time" class="title">php-auto-sync-time</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/auto-down-404-files.html" title="复制网站时自动下载缺少的文件" class="title">复制网站时自动下载缺少的文件</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/php-301-www.html" title="PHP301跳转不带www域名的网址" class="title">PHP301跳转不带www域名的网址</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/php-curl-https-ssl3-error.html" title="PHPcurl访问HTTPS网址出错解决方法" class="title">PHPcurl访问HTTPS网址出错解决...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/mysql-5-7-10-group-by-error.html" title="MYSQL升级5.7.10后GROUP BY语句出错解决方法" class="title">MYSQL升级5.7.10后GROUP BY...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/shopex-goods-menu-error.html" title="ShopEx后台商品管理左侧菜单显示空白问题原因及修复" class="title">ShopEx后台商品管理左侧菜单显示空白...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/php-http_multirequest.html" title="php同时下载多条URL函数" class="title">php同时下载多条URL函数</a>
+				</li>
+							</ul>                    
+		</div>
+        <div id="hot_art" class="com_cont" style="display: none;">  
+            <ul>
+												<li>
+				<a href="http://www.520sz.com/flash-as3-soundrecorder-wav2mp3.html" class="title" title="Flash AS3 录音保存为MP3到服务器并下载">Flash AS3 录音保存为MP3到服务器...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/zencart-multi-language-bindings-subdirectory-methods.html" class="title" title="ZenCart多语言绑定子目录方法">ZenCart多语言绑定子目录方法</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/zencart-frontend-google-language-translation.html" class="title" title="ZenCart前台Google多语言翻译插件">ZenCart前台Google多语言翻译插件</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/zencart-translate-tools.html" class="title" title="ZenCart 多语言翻译及伪原创插件">ZenCart 多语言翻译及伪原创插件</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/xfilecache-for-shopex.html" class="title" title="ShopEx 静态缓存插件(xFileCache For ShopEx)">ShopEx 静态缓存插件(xFileCache F...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/magento-migration-guide.html" class="title" title="magento搬家的方法">magento搬家的方法</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/php-debug-other.html" class="title" title="调试PHP错误经常用到的一些">调试PHP错误经常用到的一些</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/simple-table-paging-for-jquery.html" class="title" title="简单的jQuery表格分页效果实现代码">简单的jQuery表格分页效果实现代码</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/zencart-product-page-rolling-plug-in.html" class="title" title="ZenCart产品页产品滚动插件">ZenCart产品页产品滚动插件</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/shoepx485-from-the-bulk.html" class="title" title="shoepx4.8.5起批量功能">shoepx4.8.5起批量功能</a>
+				</li>
+							</ul>      
+		</div>
+		<div id="rand_art" class="com_cont" style="display: none;">  
+			<ul>
+												<li>
+				<a href="http://www.520sz.com/shoepx484-cart-add-other-goods.html" class="title" title="shoepx4.84购物车页面添加当前商品的其他规格">shoepx4.84购物车页面添加当前商品的其...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/shopex-front-end-error-solve.html" class="title" title="ShopEx前台疑难问题解决思路">ShopEx前台疑难问题解决思路</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/mysql-regexp-replace.html" class="title" title="MySQL不能正则替换内容的解决方法">MySQL不能正则替换内容的解决方法</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/apache-php-config-and-safe.html" class="title" title="搭建Apache+PHP时简单的配置与安全设置">搭建Apache+PHP时简单的配置与安全...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/cetos-multi-ip-switch-master-ip-guide.html" class="title" title="​CentOS多IP切换主IP方法">​CentOS多IP切换主IP方法</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/javascript-ascii2hex.html" class="title" title="Javascript ASCII字符转换为十六进制脚本">Javascript ASCII字符转换为十六...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/shopex-4-8-5-image-upload-error.html" class="title" title="ShopEx 4.8.5产品图片上传失败解决">ShopEx 4.8.5产品图片上传失败解决</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/xfile_cache-for-magento.html" class="title" title="MagenTo 静态缓存加速插件(xFile cache for magento)">MagenTo 静态缓存加速插件(xFile ca...</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/asp-500-error.html" class="title" title="asp网站错误处理 asp网站500错误解决">asp网站错误处理 asp网站500错误解决</a>
+				</li>
+								<li>
+				<a href="http://www.520sz.com/multi-languages-code-list.html" class="title" title="多语言翻译插件支持的语言列表 支持  zencart,magento系统">多语言翻译插件支持的语言列表 支持  z...</a>
+				</li>
+							</ul>
+		</div>   
+	</div>
+	<div class="con_box hot_box">
+		<h3>热门标签</h3>
+			<ul class="tagcloudy">
+				<li>
+				<a href="http://www.520sz.com/tag/actionscript" class="tag-link-5" title="1 topic" style="color:#1a442f;font-size: 12px;;">ActionScript</a>
+<a href="http://www.520sz.com/tag/apache" class="tag-link-19" title="2 topics" style="color:#715ce0;font-size: 13.227272727273px;;">apache</a>
+<a href="http://www.520sz.com/tag/debug" class="tag-link-32" title="1 topic" style="color:#2a36e1;font-size: 12px;;">debug</a>
+<a href="http://www.520sz.com/tag/error" class="tag-link-33" title="1 topic" style="color:#251c31;font-size: 12px;;">error</a>
+<a href="http://www.520sz.com/tag/jquery" class="tag-link-40" title="2 topics" style="color:#27295c;font-size: 13.227272727273px;;">jQuery</a>
+<a href="http://www.520sz.com/tag/magento" class="tag-link-26" title="12 topics" style="color:#b6e010;font-size: 17.522727272727px;;">magento</a>
+<a href="http://www.520sz.com/tag/mootools" class="tag-link-11" title="3 topics" style="color:#629f8a;font-size: 14.045454545455px;;">MooTools</a>
+<a href="http://www.520sz.com/tag/mysql" class="tag-link-36" title="2 topics" style="color:#ac672d;font-size: 13.227272727273px;;">mysql</a>
+<a href="http://www.520sz.com/tag/php" class="tag-link-13" title="5 topics" style="color:#a6127a;font-size: 15.272727272727px;;">PHP</a>
+<a href="http://www.520sz.com/tag/price" class="tag-link-29" title="1 topic" style="color:#b05e97;font-size: 12px;;">price</a>
+<a href="http://www.520sz.com/tag/shopex" class="tag-link-77" title="10 topics" style="color:#13a6b2;font-size: 17.045454545455px;;">ShopEx</a>
+<a href="http://www.520sz.com/tag/ssh" class="tag-link-51" title="2 topics" style="color:#fca801;font-size: 13.227272727273px;;">ssh</a>
+<a href="http://www.520sz.com/tag/svn" class="tag-link-50" title="2 topics" style="color:#d2ea62;font-size: 13.227272727273px;;">svn</a>
+<a href="http://www.520sz.com/tag/vhost-map" class="tag-link-18" title="1 topic" style="color:#258ca5;font-size: 12px;;">Vhost.map</a>
+<a href="http://www.520sz.com/tag/windows" class="tag-link-35" title="1 topic" style="color:#24b2d8;font-size: 12px;;">windows</a>
+<a href="http://www.520sz.com/tag/zencart" class="tag-link-78" title="14 topics" style="color:#12a1c;font-size: 18px;;">ZenCart</a>
+<a href="http://www.520sz.com/tag/%e4%b9%b1%e7%a0%81" class="tag-link-49" title="3 topics" style="color:#74c841;font-size: 14.045454545455px;;">乱码</a>
+<a href="http://www.520sz.com/tag/%e4%bc%aa%e5%8e%9f%e5%88%9b" class="tag-link-23" title="1 topic" style="color:#23e997;font-size: 12px;;">伪原创</a>
+<a href="http://www.520sz.com/tag/%e5%a4%9a%e8%af%ad%e8%a8%80" class="tag-link-21" title="6 topics" style="color:#857c7f;font-size: 15.75px;;">多语言</a>
+<a href="http://www.520sz.com/tag/%e5%b0%8f%e8%af%ad%e7%a7%8d" class="tag-link-48" title="2 topics" style="color:#1bf433;font-size: 13.227272727273px;;">小语种</a>
+<a href="http://www.520sz.com/tag/%e5%bc%80%e6%ba%90%e4%bb%a3%e7%a0%81" class="tag-link-75" title="3 topics" style="color:#1cd791;font-size: 14.045454545455px;;">开源代码</a>
+<a href="http://www.520sz.com/tag/%e6%80%bb%e4%bb%b7" class="tag-link-28" title="1 topic" style="color:#5f3b3e;font-size: 12px;;">总价</a>
+<a href="http://www.520sz.com/tag/%e6%89%a9%e5%b1%95%e5%b1%9e%e6%80%a7" class="tag-link-34" title="1 topic" style="color:#bd2405;font-size: 12px;;">扩展属性</a>
+<a href="http://www.520sz.com/tag/%e6%89%b9%e9%87%8f" class="tag-link-30" title="2 topics" style="color:#72412e;font-size: 13.227272727273px;;">批量</a>
+<a href="http://www.520sz.com/tag/%e6%8f%92%e4%bb%b6" class="tag-link-17" title="11 topics" style="color:#62ffaf;font-size: 17.318181818182px;;">插件</a>
+<a href="http://www.520sz.com/tag/%e7%bc%93%e5%ad%98" class="tag-link-25" title="2 topics" style="color:#cb3361;font-size: 13.227272727273px;;">缓存</a>
+<a href="http://www.520sz.com/tag/%e7%bf%bb%e8%af%91" class="tag-link-22" title="3 topics" style="color:#31104b;font-size: 14.045454545455px;;">翻译</a>
+<a href="http://www.520sz.com/tag/%e8%99%9a%e6%8b%9f%e4%b8%bb%e6%9c%ba" class="tag-link-20" title="2 topics" style="color:#c7733;font-size: 13.227272727273px;;">虚拟主机</a>
+<a href="http://www.520sz.com/tag/%e8%b0%83%e4%bb%b7" class="tag-link-31" title="3 topics" style="color:#413c0;font-size: 14.045454545455px;;">调价</a>
+<a href="http://www.520sz.com/tag/%e9%9d%99%e6%80%81" class="tag-link-24" title="2 topics" style="color:#bb3eef;font-size: 13.227272727273px;;">静态</a>				</li>
+				</ul>
+	</div> 
+		<div class="con_box hot_box">
+		<h3>读者排行</h3>
+		<div class="readers clearfix">
+					</div>
+	</div> 
+	<div class="con_box hot_box">
+		<h3>最新评论</h3>
+		<div class="r_comments">
+			<ul>
+			
+<li><img alt="Kevin" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://1.gravatar.com/avatar/7cdbfca58e8807e28b367a23c03a934a?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32" original="http://1.gravatar.com/avatar/7cdbfca58e8807e28b367a23c03a934a?s=32&amp;d=mm&amp;r=g"> <a href="http://www.520sz.com/xfile_cache-for-zencart.html#comment-6339" title="发表在： zencart 静态缓存加速插件 xfile_cache-for-zencart">Kevin:<br>麻烦你发份给我。</a><br></li>
+<li><img alt="crusher" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://0.gravatar.com/avatar/3899c27d09daf9cb8f1bd8e3b0309bc8?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32" original="http://0.gravatar.com/avatar/3899c27d09daf9cb8f1bd8e3b0309bc8?s=32&amp;d=mm&amp;r=g"> <a href="http://www.520sz.com/translate-magento-upgrade-to-2-0-0.html#comment-6310" title="发表在： 多语言批量翻译工具 For MagenTo 升级为2.0.0">crusher:<br>谢谢分享呀。</a><br></li>
+<li><img alt="haoqi" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://1.gravatar.com/avatar/72aa0c9461db563d92761ce29d89e421?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32" original="http://1.gravatar.com/avatar/72aa0c9461db563d92761ce29d89e421?s=32&amp;d=mm&amp;r=g"> <a href="http://www.520sz.com/xampp1-7-7-zend-guard-loader-v3-3.html#comment-6203" title="发表在： XAMPP1.7.7加载不了Zend Guard Loader v3.3的解决方法">haoqi:<br>试了，还是不能用</a><br></li>
+<li><img alt="qqjeans" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://1.gravatar.com/avatar/4528cdfd31c28f048082e55c1aa34be0?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32" original="http://1.gravatar.com/avatar/4528cdfd31c28f048082e55c1aa34be0?s=32&amp;d=mm&amp;r=g"> <a href="http://www.520sz.com/about-me#comment-6195" title="发表在： 关于青剑">qqjeans:<br>慢慢看，慢慢品尝</a><br></li>
+<li><img alt="书生" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" srcset="http://0.gravatar.com/avatar/022a62ea22896051540dc89f0b9ab003?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32" original="http://0.gravatar.com/avatar/022a62ea22896051540dc89f0b9ab003?s=32&amp;d=mm&amp;r=g"> <a href="http://www.520sz.com/xampp1-7-7-zend-guard-loader-v3-3.html#comment-6135" title="发表在： XAMPP1.7.7加载不了Zend Guard Loader v3.3的解决方法">书生:<br>这个教程没看明白，能再详细一点吗</a><br></li>			</ul>
+		</div>				
+	</div>
+		<div class="hcms_rollbox" style="display: none; top: 0px;"></div><div id="rollstart"></div>
+									<div class="clear"></div>
+		</div>
+</div> 
+<!-- //wrapper -->
+<!-- //底部模板 -->
+<div id="footer" class="clearfix">
+    <div class="con_box ">
+	          <div class="footer_bug">
+			<a rel="nofollow" href="http://www.520sz.com/about-me" target="_blank">关于青剑</a>  |
+            <a rel="nofollow" href="http://www.520sz.com/zencart-plug-in" target="_blank">Zen-cart插件列表</a>  |
+            <a rel="nofollow" href="http://www.520sz.com/shopex%E6%8F%92%E4%BB%B6" target="">ShopEx插件列表</a>  |
+            <a rel="nofollow" href="http://www.520sz.com/help/shopex48/" target="">ShopEx4.8帮助手册</a>  |
+          <!--  <a href="/sitemap.html" target="_blank">Sitemap</a> -->
+          </div>
+
+    </div>
+    	<div class="copyright">
+      	<p>   青剑 Steven为个人站点，本站内容仅供观摩学习交流之用，将不对任何资源负法律责任。<br>如有侵犯您的版权，请及时联系青剑（<a href="mailto:admin@520sz.com">admin@520sz.com</a>），将尽快处理。<br></p>
+<p class="powered">Copyright© 2010-2012  <a href="http://www.520sz.com/" title="青剑 Steven">520sz.COM</a>.   <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fee57ef566a91bc9cfd439060f509c144' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="http://hm.baidu.com/h.js?ee57ef566a91bc9cfd439060f509c144" type="text/javascript"></script>
+  77次查询</p>        
+
+<!-- /powered -->
+   </div>
+   <div class="footer_right">
+   <img src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/space.gif" width="166" height="67" alt="青剑 Steven" original="http://www.520sz.com/wp-content/themes/Hcms/images/footer_logo.jpg">
+   <p>Powered by <a href="http://wordpress.org/" title="WordPress博客程序" target="_blank">WordPress</a> &amp; <a href="http://www.cmhello.com/" title="Hcms主题" target="_blank">Hcms theme</a>.</p>
+   </div>
+   <!-- This website uses Google Analytics Visits v1.1.6.6 Wordpress plugin developed by PepLamb (PepLamb.com) --><script type="text/javascript">
+function path() {
+	var args = arguments,
+	result = [];
+  for(var i = 0; i < args.length; i++)
+		result.push(args[i].replace('@', 'http://www.520sz.com/wp-content/plugins/syntax-highlighter-optimized/scripts/'));
+  return result
+};
+SyntaxHighlighter.autoloader.apply(null, path(
+  'applescript            @shBrushAppleScript.js',
+  'actionscript3 as3      @shBrushAS3.js',
+  'bash shell             @shBrushBash.js',
+  'coldfusion cf          @shBrushColdFusion.js',
+  'cpp c                  @shBrushCpp.js',
+  'c# c-sharp csharp      @shBrushCSharp.js',
+  'css                    @shBrushCss.js',
+  'delphi pascal          @shBrushDelphi.js',
+  'diff patch pas         @shBrushDiff.js',
+  'erl erlang             @shBrushErlang.js',
+  'groovy                 @shBrushGroovy.js',
+  'java                   @shBrushJava.js',
+  'jfx javafx             @shBrushJavaFX.js',
+  'js jscript javascript  @shBrushJScript.js',
+  'perl pl                @shBrushPerl.js',
+  'php                    @shBrushPhp.js',
+  'text plain             @shBrushPlain.js',
+  'py python              @shBrushPython.js',
+  'ruby rails ror rb      @shBrushRuby.js',
+  'sass scss              @shBrushSass.js',
+  'scala                  @shBrushScala.js',
+  'sql                    @shBrushSql.js',
+  'vb vbnet               @shBrushVb.js',
+  'xml xhtml xslt html    @shBrushXml.js'
+));
+SyntaxHighlighter.defaults['quick-code'] = false;
+SyntaxHighlighter.all();
+</script>
+	<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/form.js.下载"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var viewsCacheL10n = {"admin_ajax_url":"http:\/\/www.520sz.com\/wp-admin\/admin-ajax.php","post_id":"180"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/postviews-cache.js.下载"></script>
+		<div id="shangxia"><div id="shang" title="↑ 返回顶部"></div>
+				<div id="comt" title="查看评论"></div>
+		<script type="text/javascript" src="./Protocol https not supported or disabled in libcurl解决方法 « 青剑 Steven_files/comments-ajax.js.下载"></script>
+				<div id="xia" title="↓ 移至底部"></div>
+		<div id="myrss" title="Hi! 我是青剑，欢迎光临主人的博客，赶快订阅一下吧" onclick="window.open(&#39;http://feed.feedsky.com/Stevenliao&#39;,&#39;_blank&#39;);"></div></div>
+</div>
+
+
+<!-- WP Super Cache is installed but broken. The constant WPCACHEHOME must be set in the file wp-config.php and point at the WP Super Cache plugin directory. --><remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt"><label>限制解除 <input type="checkbox" name="" id="black_node"></label></remove-web-limits-iqxin></body></html>
