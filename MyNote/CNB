@@ -1,0 +1,1 @@
+1，因cpp与java交互出现过client接收不到response的情况，为避免，遂启用protolbuffer
