@@ -41,7 +41,6 @@ void AlermFunc(int sig)
     //暂时屏蔽SIGALRM信号 以免来的时候这个还没处理完
     sigprocmask(SIG_BLOCK,&nmask,NULL);
 
-
     int fd =open(buf,O_RDWR|O_CREAT|O_APPEND,0666);
     if(fd<0)
     {
