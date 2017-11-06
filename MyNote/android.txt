@@ -1,0 +1,16 @@
+要在项目的buidl.gradle下的Android中加入以下声明，告诉gradle包含哪个abi的so，若不声明并且so的目录也没有对应的ABI的so，会包INSTALLTION_FAILED_N0_MATCHING_ABIS的错误
+splits {
+            abi {
+                            enable true
+                                            reset()
+                                                        include 'x86', 'arm64-v8a', 'armeabi-v7a'
+                                                                    universalApk true
+                                                                            }
+                }
+以下声明so所在目录
+    sourceSets
+        {
+                main{
+                        jinLibs 'jniLibs'
+                                }
+                    }
