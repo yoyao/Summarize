@@ -1,1 +1,2 @@
-1，因cpp与java交互出现过client接收不到response的情况，为避免，遂启用protolbuffer
+1，因cpp与java交互出现过client接收不到response的情况，为避免，遂启用protobuffer
+2，windows上QT使用protobuf详见url  http://blog.csdn.net/jack_20/article/details/73549523
